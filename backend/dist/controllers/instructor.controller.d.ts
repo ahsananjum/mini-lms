@@ -1,0 +1,23 @@
+import { Request, Response, NextFunction } from 'express';
+export declare function getDashboard(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function listCourses(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function getCourse(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function listModules(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function createModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteModule(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function uploadMaterial(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteMaterial(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function listAnnouncements(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function createAnnouncement(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateAnnouncement(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteAnnouncement(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function listAssignments(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function createAssignment(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function getAssignment(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function updateAssignment(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function deleteAssignment(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function listSubmissions(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function gradeSubmission(req: Request, res: Response, next: NextFunction): Promise<void>;
+export declare function getSubmissionsOverview(req: Request, res: Response, next: NextFunction): Promise<void>;
+//# sourceMappingURL=instructor.controller.d.ts.map

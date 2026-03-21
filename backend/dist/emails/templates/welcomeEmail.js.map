@@ -1,0 +1,1 @@
+{"version":3,"file":"welcomeEmail.js","sourceRoot":"","sources":["../../../src/emails/templates/welcomeEmail.ts"],"names":[],"mappings":";AAAA,2EAA2E;;AAE3E,kDASC;AATD,SAAgB,mBAAmB,CAAC,IAAY,EAAE,IAAY,EAAE,KAAa,EAAE,QAAgB;IAC7F,OAAO;;YAEG,IAAI;sBACM,IAAI;kDACwB,KAAK;kBACrC,QAAQ;;GAEvB,CAAC;AACJ,CAAC"}

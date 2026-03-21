@@ -1,0 +1,38 @@
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { corsOptions } from './config/cors';
+import { errorMiddleware } from './middlewares/error.middleware';
+import { sendSuccess } from './utils/apiResponse';
+import authRoutes from './routes/auth.routes';
+import adminRoutes from './routes/admin.routes';
+import instructorRoutes from './routes/instructor.routes';
+import studentRoutes from './routes/student.routes';
+
+const app = express();
+
+// Core middleware
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+// Health endpoint
+app.get('/api/health', (req, res) => {
+  sendSuccess(res, 'API is running', { service: 'mini-lms-backend' });
+});
+
+// Route scaffolds
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/instructor', instructorRoutes);
+app.use('/api/student', studentRoutes);
+
+// Error handling
+app.use(errorMiddleware);
+
+export default app;
