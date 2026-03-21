@@ -6,6 +6,7 @@ import { Assignment } from '../models/Assignment';
 import { Submission } from '../models/Submission';
 import { Enrollment } from '../models/Enrollment';
 import { ApiError } from '../utils/ApiError';
+import { put, del } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 
@@ -20,11 +21,15 @@ async function getOwnCourse(courseId: string, instructorId: string) {
   return course;
 }
 
-function safeDeleteFile(filePath: string) {
+async function safeDeleteFile(filePath: string) {
   try {
-    const fullPath = path.join(process.cwd(), filePath);
-    if (fs.existsSync(fullPath)) {
-      fs.unlinkSync(fullPath);
+    if (filePath.startsWith('http')) {
+      await del(filePath);
+    } else {
+      const fullPath = path.join(process.cwd(), filePath);
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+      }
     }
   } catch (err) {
     console.error('Failed to delete file:', filePath, err);
@@ -203,7 +208,8 @@ export async function createMaterial(
   moduleId: string,
   instructorId: string,
   data: { title: string; description?: string },
-  file: Express.Multer.File
+  file: Express.Multer.File,
+  fileUrl: string
 ) {
   const mod = await Module.findById(moduleId);
   if (!mod) throw ApiError.notFound('Module not found');
@@ -215,7 +221,7 @@ export async function createMaterial(
     title: data.title,
     description: data.description || '',
     fileName: file.originalname,
-    fileUrl: `/uploads/materials/${file.filename}`,
+    fileUrl: fileUrl,
     mimeType: file.mimetype,
     fileSize: file.size,
     uploadedBy: instructorId,

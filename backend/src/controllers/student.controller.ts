@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as studentService from '../services/student.service';
+import { put } from '@vercel/blob';
 import { sendSuccess } from '../utils/apiResponse';
 import { ApiError } from '../utils/ApiError';
 
@@ -84,10 +85,15 @@ export async function uploadSubmission(req: Request, res: Response, next: NextFu
       throw ApiError.badRequest('File is required');
     }
 
+    const blob = await put(`submissions/${Date.now()}-${req.file.originalname}`, req.file.buffer, {
+      access: 'public',
+    });
+
     const submission = await studentService.createOrReplaceSubmission(
       req.params.id as string,
       req.user!.userId,
-      req.file
+      req.file,
+      blob.url
     );
 
     sendSuccess(res, 'Submission uploaded successfully', { submission }, 201);

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as instructorService from '../services/instructor.service';
+import { put } from '@vercel/blob';
 import { sendSuccess } from '../utils/apiResponse';
 import { materialFieldsSchema } from '../validators/instructor.validator';
 import { ApiError } from '../utils/ApiError';
@@ -83,17 +84,20 @@ export async function uploadMaterial(req: Request, res: Response, next: NextFunc
 
     const parsed = materialFieldsSchema.safeParse(req.body);
     if (!parsed.success) {
-      const fs = await import('fs');
-      if (req.file.path) fs.unlinkSync(req.file.path);
       const messages = parsed.error.issues.map((i) => i.message);
       throw ApiError.badRequest('Validation failed', messages);
     }
+
+    const blob = await put(`materials/${Date.now()}-${req.file.originalname}`, req.file.buffer, {
+      access: 'public',
+    });
 
     const material = await instructorService.createMaterial(
       req.params.id as string,
       req.user!.userId,
       parsed.data,
-      req.file
+      req.file,
+      blob.url
     );
     sendSuccess(res, 'Material uploaded successfully', { material }, 201);
   } catch (error) {
