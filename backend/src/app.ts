@@ -30,6 +30,13 @@ app.get('/health', (req, res) => {
   sendSuccess(res, 'API is running', { service: 'mini-lms-backend' });
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: '🚀 Mini-LMS Backend is seamlessly deployed and running successfully on Vercel!'
+  });
+});
+
 // Route scaffolds
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
