@@ -12,6 +12,9 @@ import studentRoutes from './routes/student.routes';
 
 const app = express();
 
+// Trust proxy for Vercel deployment so secure cookies are correctly handled
+app.set('trust proxy', 1);
+
 // Core middleware
 app.use(cors(corsOptions));
 app.use(express.json());
