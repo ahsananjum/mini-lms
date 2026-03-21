@@ -21,8 +21,12 @@ app.use(cookieParser());
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-// Health endpoint
+// Health endpoints
 app.get('/api/health', (req, res) => {
+  sendSuccess(res, 'API is running', { service: 'mini-lms-backend' });
+});
+
+app.get('/health', (req, res) => {
   sendSuccess(res, 'API is running', { service: 'mini-lms-backend' });
 });
 

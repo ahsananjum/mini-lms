@@ -6,6 +6,7 @@ import { Announcement } from '../models/Announcement';
 import { Assignment } from '../models/Assignment';
 import { Submission } from '../models/Submission';
 import { ApiError } from '../utils/ApiError';
+import { put, del } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,11 +18,15 @@ async function verifyEnrollment(courseId: string, studentId: string) {
   return enrollment;
 }
 
-function safeDeleteFile(filePath: string) {
+async function safeDeleteFile(filePath: string) {
   try {
-    const fullPath = path.join(process.cwd(), filePath);
-    if (fs.existsSync(fullPath)) {
-      fs.unlinkSync(fullPath);
+    if (filePath.startsWith('http')) {
+      await del(filePath);
+    } else {
+      const fullPath = path.join(process.cwd(), filePath);
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+      }
     }
   } catch (err) {
     console.error('Failed to delete file:', filePath, err);
@@ -283,7 +288,8 @@ export async function getAssignmentDetail(assignmentId: string, studentId: strin
 export async function createOrReplaceSubmission(
   assignmentId: string,
   studentId: string,
-  file: Express.Multer.File
+  file: Express.Multer.File,
+  fileUrl: string
 ) {
   const assignment = await Assignment.findById(assignmentId);
   if (!assignment) throw ApiError.notFound('Assignment not found');
@@ -299,8 +305,6 @@ export async function createOrReplaceSubmission(
   if (existing) {
     // If graded, reject replacement
     if (existing.marks !== null) {
-      // Clean up the newly uploaded file since we're rejecting
-      safeDeleteFile(`/uploads/submissions/${file.filename}`);
       throw ApiError.badRequest('Cannot replace a graded submission. Your submission has already been graded.');
     }
 
@@ -310,7 +314,7 @@ export async function createOrReplaceSubmission(
     }
 
     existing.fileName = file.originalname;
-    existing.fileUrl = `/uploads/submissions/${file.filename}`;
+    existing.fileUrl = fileUrl;
     existing.mimeType = file.mimetype;
     existing.fileSize = file.size;
     existing.submittedAt = new Date();
@@ -324,7 +328,7 @@ export async function createOrReplaceSubmission(
     assignment: assignmentId,
     student: studentId,
     fileName: file.originalname,
-    fileUrl: `/uploads/submissions/${file.filename}`,
+    fileUrl: fileUrl,
     mimeType: file.mimetype,
     fileSize: file.size,
     submittedAt: new Date(),
