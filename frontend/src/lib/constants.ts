@@ -1,4 +1,5 @@
-export const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const isBrowser = typeof window !== 'undefined';
+export const API_BASE_URL = isBrowser ? '/api' : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api`;
 export const COOKIE_NAME = 'lms_token'; // Note: Usually handled by backend, but good to have reference
 
 export const ROUTES = {

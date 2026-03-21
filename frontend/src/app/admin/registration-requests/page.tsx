@@ -51,7 +51,7 @@ function AdminDashboardContent() {
       if (roleFilter.value) params.append('role', roleFilter.value);
       if (searchQuery) params.append('search', searchQuery);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/registration-requests?${params.toString()}`, {
+      const res = await fetch(`/api/admin/registration-requests?${params.toString()}`, {
         credentials: 'include',
       });
       const data = await res.json();
@@ -78,7 +78,7 @@ function AdminDashboardContent() {
   const handleAction = async (id: string, action: 'approve' | 'reject') => {
     try {
       setWarningMessage(null);
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/registration-requests/${id}/${action}`, {
+      const res = await fetch(`/api/admin/registration-requests/${id}/${action}`, {
         method: 'PATCH',
         credentials: 'include',
       });

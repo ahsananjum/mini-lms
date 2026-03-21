@@ -127,7 +127,7 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
 
     try {
       // Use credentials: 'include' so the HTTP-only cookie is sent automatically
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/instructor/modules/${moduleId}/materials`, {
+      const res = await fetch(`/api/instructor/modules/${moduleId}/materials`, {
         method: 'POST',
         credentials: 'include',
         body: formData

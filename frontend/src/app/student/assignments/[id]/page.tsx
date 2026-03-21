@@ -87,7 +87,7 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
       formData.append('file', file);
 
       // Must use credentials: 'include' for the multipart form fetch directly
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/student/assignments/${assignmentId}/submission`, {
+      const res = await fetch(`/api/student/assignments/${assignmentId}/submission`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
