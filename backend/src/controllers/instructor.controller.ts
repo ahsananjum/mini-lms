@@ -88,6 +88,10 @@ export async function uploadMaterial(req: Request, res: Response, next: NextFunc
       throw ApiError.badRequest('Validation failed', messages);
     }
 
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      throw ApiError.internal('BLOB_READ_WRITE_TOKEN is missing in the Vercel container. Please trigger a new deployment!');
+    }
+
     const blob = await put(`materials/${Date.now()}-${req.file.originalname}`, req.file.buffer, {
       access: 'public',
     });

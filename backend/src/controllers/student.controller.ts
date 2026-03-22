@@ -85,6 +85,10 @@ export async function uploadSubmission(req: Request, res: Response, next: NextFu
       throw ApiError.badRequest('File is required');
     }
 
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      throw ApiError.internal('BLOB_READ_WRITE_TOKEN is missing in the Vercel container. Please trigger a new deployment!');
+    }
+
     const blob = await put(`submissions/${Date.now()}-${req.file.originalname}`, req.file.buffer, {
       access: 'public',
     });
