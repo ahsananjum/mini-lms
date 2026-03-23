@@ -22,7 +22,7 @@ export function Navigation() {
   }
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+    <nav className="bg-white/85 backdrop-blur-xl border-b border-slate-200/80 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
@@ -38,8 +38,8 @@ export function Navigation() {
                     href="/admin"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname === '/admin'
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Dashboard
@@ -48,8 +48,8 @@ export function Navigation() {
                     href="/admin/users"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname.startsWith('/admin/users')
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Users
@@ -58,8 +58,8 @@ export function Navigation() {
                     href="/admin/courses"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname.startsWith('/admin/courses')
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Courses
@@ -84,8 +84,8 @@ export function Navigation() {
                     href="/student"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname === '/student'
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Dashboard
@@ -94,8 +94,8 @@ export function Navigation() {
                     href="/student/courses"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname.startsWith('/student/courses')
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     My Courses
@@ -104,8 +104,8 @@ export function Navigation() {
                     href="/student/grades"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname.startsWith('/student/grades')
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Grades
@@ -120,8 +120,8 @@ export function Navigation() {
                     href="/instructor"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname === '/instructor'
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Dashboard
@@ -130,8 +130,8 @@ export function Navigation() {
                     href="/instructor/courses"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname.startsWith('/instructor/courses')
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     My Courses
@@ -140,8 +140,8 @@ export function Navigation() {
                     href="/instructor/submissions"
                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                       typeof window !== 'undefined' && window.location.pathname.startsWith('/instructor/submissions')
-                        ? 'border-indigo-500 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                        ? 'border-indigo-600 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     Submissions & Grading
@@ -152,8 +152,8 @@ export function Navigation() {
           </div>
           
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <span className="text-sm font-medium text-slate-500 mr-5">
-              {user.email} <span className="opacity-75">({user.role})</span>
+            <span className="text-sm font-medium text-slate-600 mr-5 bg-slate-50 px-3 py-1.5 rounded-full ring-1 ring-inset ring-slate-200">
+              {user.email} <span className="opacity-70 ml-1 font-normal capitalize">({user.role})</span>
             </span>
             <Button onClick={handleLogout} variant="secondary">
               Logout

@@ -91,29 +91,29 @@ export default function StudentDashboard() {
           <div className="space-y-8">
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Enrolled Courses</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.enrolledCoursesCount}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Enrolled Courses</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.enrolledCoursesCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-rose-200 p-5 bg-rose-50/30">
-                <span className="text-xs font-bold text-rose-700 uppercase tracking-wider">Pending Assignments</span>
-                <div className="mt-2 text-3xl font-black text-rose-600">{data.pendingAssignmentsCount}</div>
+              <div className="bg-rose-50/50 rounded-xl shadow-sm ring-1 ring-rose-200/80 p-5">
+                <span className="text-xs font-semibold text-rose-700 uppercase tracking-wider">Pending Assignments</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-rose-600">{data.pendingAssignmentsCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-indigo-200 p-5 bg-indigo-50/30">
-                <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">Submitted</span>
-                <div className="mt-2 text-3xl font-black text-indigo-600">{data.submittedAssignmentsCount}</div>
+              <div className="bg-indigo-50/50 rounded-xl shadow-sm ring-1 ring-indigo-200/60 p-5">
+                <span className="text-xs font-semibold text-indigo-700 uppercase tracking-wider">Submitted</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-indigo-600">{data.submittedAssignmentsCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-emerald-200 p-5 bg-emerald-50/30">
-                <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Graded</span>
-                <div className="mt-2 text-3xl font-black text-emerald-600">{data.gradedAssignmentsCount}</div>
+              <div className="bg-emerald-50/50 rounded-xl shadow-sm ring-1 ring-emerald-200/80 p-5">
+                <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wider">Graded</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-emerald-600">{data.gradedAssignmentsCount}</div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Recent Announcements */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Announcements</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Announcements</h3>
                 </div>
                 {data.recentAnnouncements && data.recentAnnouncements.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -130,9 +130,9 @@ export default function StudentDashboard() {
               </div>
 
               {/* Recent Grades */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Grades</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Grades</h3>
                 </div>
                 {data.recentGrades && data.recentGrades.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -142,9 +142,9 @@ export default function StudentDashboard() {
                           <div className="font-semibold text-slate-900 text-sm">{g.assignmentTitle}</div>
                           <div className="text-xs text-slate-500 mt-0.5">{g.courseTitle}</div>
                         </div>
-                        <div className="inline-flex items-center gap-1 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
+                        <div className="inline-flex items-center gap-1 bg-emerald-50 px-2.5 py-1 rounded-md ring-1 ring-inset ring-emerald-700/10">
                           <span className="text-sm font-bold text-emerald-700">{g.marks}</span>
-                          <span className="text-[10px] font-bold text-emerald-400">/{g.totalMarks}</span>
+                          <span className="text-[10px] font-bold text-emerald-500">/{g.totalMarks}</span>
                         </div>
                       </li>
                     ))}

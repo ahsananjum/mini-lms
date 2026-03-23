@@ -104,31 +104,31 @@ export default function InstructorDashboard() {
           <div className="space-y-8">
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Assigned Courses</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.assignedCoursesCount}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Assigned Courses</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.assignedCoursesCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Modules</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.totalModulesCount}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Modules</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalModulesCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Materials</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.totalMaterialsCount}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Materials</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalMaterialsCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Assignments</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.totalAssignmentsCount}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Assignments</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalAssignmentsCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-amber-200 p-5 bg-amber-50/30">
-                <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">Ungraded Submissions</span>
-                <div className="mt-2 text-3xl font-black text-amber-600">{data.ungradedSubmissionsCount}</div>
+              <div className="bg-amber-50/50 rounded-xl shadow-sm ring-1 ring-amber-200/80 p-5">
+                <span className="text-xs font-semibold text-amber-700 uppercase tracking-wider">Ungraded</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-amber-600">{data.ungradedSubmissionsCount}</div>
               </div>
             </div>
 
             {/* Grading Card Section */}
             {overview && (
-              <div className="bg-white rounded-2xl shadow-sm border border-indigo-200 p-8 flex flex-col sm:flex-row justify-between items-center bg-indigo-50/30">
+              <div className="bg-indigo-50/50 rounded-2xl shadow-sm ring-1 ring-indigo-200/60 p-8 flex flex-col sm:flex-row justify-between items-center">
                 <div>
                   <h2 className="text-2xl font-extrabold text-slate-900">Submissions & Grading</h2>
                   <p className="text-slate-500 mt-1">
@@ -145,9 +145,9 @@ export default function InstructorDashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Recent Materials */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Materials</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Materials</h3>
                 </div>
                 {data.recentMaterials && data.recentMaterials.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -164,9 +164,9 @@ export default function InstructorDashboard() {
               </div>
 
               {/* Recent Announcements */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Announcements</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Announcements</h3>
                 </div>
                 {data.recentAnnouncements && data.recentAnnouncements.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -183,9 +183,9 @@ export default function InstructorDashboard() {
               </div>
 
               {/* Recent Assignments */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Assignments</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Assignments</h3>
                 </div>
                 {data.recentAssignments && data.recentAssignments.length > 0 ? (
                   <ul className="divide-y divide-slate-100">

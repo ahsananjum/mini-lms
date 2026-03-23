@@ -115,11 +115,11 @@ function AdminDashboardContent() {
           </div>
         )}
 
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 flex flex-col overflow-hidden">
           
-          <div className="p-6 border-b border-slate-200 bg-slate-50/50 flex flex-col md:flex-row md:items-end gap-5">
+          <div className="p-6 border-b border-slate-200 bg-white flex flex-col md:flex-row md:items-end gap-5">
             <div className="w-full md:w-1/3">
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Search</label>
+              <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Search</label>
               <Input 
                 type="text" 
                 placeholder="Name or email..." 
@@ -129,9 +129,9 @@ function AdminDashboardContent() {
             </div>
             
             <div className="w-full md:w-1/4">
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Status</label>
+              <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Status</label>
               <select 
-                className="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-900 sm:text-sm transition-colors"
+                className="block w-full rounded-md border-0 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 hover:ring-slate-400 sm:text-sm sm:leading-6 transition-all bg-white"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
@@ -143,9 +143,9 @@ function AdminDashboardContent() {
             </div>
             
             <div className="w-full md:w-1/4">
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Role</label>
+              <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Role</label>
               <select 
-                className="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-900 sm:text-sm transition-colors"
+                className="block w-full rounded-md border-0 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 hover:ring-slate-400 sm:text-sm sm:leading-6 transition-all bg-white"
                 value={roleFilter.value}
                 onChange={(e) => setRoleFilter({ label: e.target.options[e.target.selectedIndex].text, value: e.target.value })}
               >
@@ -162,16 +162,16 @@ function AdminDashboardContent() {
           
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50 border-b border-slate-200">
+              <thead className="bg-slate-50/80">
                 <tr>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Signup Date</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">User</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Role</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Signup Date</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-slate-100 text-sm">
+              <tbody className="bg-white divide-y divide-slate-200/60 text-sm">
                 {loading ? (
                   <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-500">Loading requests...</td></tr>
                 ) : error ? (

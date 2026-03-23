@@ -70,28 +70,28 @@ export default function StudentCourseDetailPage({ params }: { params: Promise<{ 
         </Link>
 
         {loading ? (
-          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">
+          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">
             Loading course content...
           </div>
         ) : error || !course ? (
-           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm border border-rose-100 mt-6">
+           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm ring-1 ring-rose-200 mt-6">
             {error || 'Course not found'}
           </div>
         ) : (
           <div className="space-y-8">
             {/* Header & Instructor Info */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-8">
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 <div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-indigo-50 text-indigo-700 font-mono mb-4 border border-indigo-100">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-indigo-50 text-indigo-700 font-mono mb-4 ring-1 ring-inset ring-indigo-600/10">
                     {course.code}
                   </span>
                   <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-4">{course.title}</h1>
                   <p className="text-lg text-slate-600 max-w-3xl">{course.description}</p>
                 </div>
                 
-                <div className="shrink-0 bg-slate-50 p-5 rounded-xl border border-slate-100 min-w-[240px]">
-                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Instructor</h3>
+                <div className="shrink-0 bg-slate-50 p-5 rounded-xl ring-1 ring-slate-200 min-w-[240px]">
+                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Instructor</h3>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-700 font-bold text-lg">
                       {course.instructor?.name?.charAt(0).toUpperCase() || 'I'}
@@ -114,14 +114,14 @@ export default function StudentCourseDetailPage({ params }: { params: Promise<{ 
                 </h2>
                 
                 {modules.length === 0 ? (
-                  <div className="p-8 text-center text-slate-500 bg-white border border-slate-200 rounded-xl border-dashed">
+                  <div className="p-8 text-center text-slate-500 bg-white ring-1 ring-slate-200 rounded-xl border-dashed">
                     No modules published yet.
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {modules.map((mod, i) => (
-                      <div key={mod._id} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                        <div className="p-6 bg-slate-50/50 border-b border-slate-100">
+                      <div key={mod._id} className="bg-white ring-1 ring-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <div className="p-6 bg-slate-50/50 border-b border-slate-200">
                           <h3 className="text-lg font-bold text-slate-900 mb-1">Module {i + 1}: {mod.title}</h3>
                           {mod.description && <p className="text-sm text-slate-600">{mod.description}</p>}
                         </div>
@@ -163,7 +163,7 @@ export default function StudentCourseDetailPage({ params }: { params: Promise<{ 
                     <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
                     Assignments
                   </h2>
-                  <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                  <div className="bg-white ring-1 ring-slate-200 rounded-xl shadow-sm overflow-hidden">
                     {assignments.length === 0 ? (
                       <div className="p-6 text-sm text-slate-500 text-center italic">No assignments yet.</div>
                     ) : (
@@ -203,7 +203,7 @@ export default function StudentCourseDetailPage({ params }: { params: Promise<{ 
                     <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" /></svg>
                     Announcements
                   </h2>
-                  <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                  <div className="bg-white ring-1 ring-slate-200 rounded-xl shadow-sm overflow-hidden">
                     {announcements.length === 0 ? (
                       <div className="p-6 text-sm text-slate-500 text-center italic">No announcements.</div>
                     ) : (

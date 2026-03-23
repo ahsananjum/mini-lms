@@ -63,15 +63,11 @@ export default function StudentGradesPage() {
         </h1>
 
         {loading ? (
-          <div className="text-center p-12 text-slate-500 bg-white rounded-2xl border border-slate-200 shadow-sm">
-            Loading courses...
-          </div>
+           <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">Loading courses...</div>
         ) : error ? (
-          <div className="text-center p-8 bg-white border border-rose-200 rounded-2xl font-medium text-rose-500 shadow-sm">
-            {error}
-          </div>
+           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">{error}</div>
         ) : courses.length === 0 ? (
-           <div className="text-center p-16 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col items-center">
+           <div className="p-16 text-center bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6 flex flex-col items-center">
             <svg className="w-16 h-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
             <h3 className="text-lg font-bold text-slate-900 mb-2">No courses found</h3>
             <p className="text-slate-500 max-w-sm">You do not have any enrolled courses to view grades for.</p>
@@ -79,10 +75,10 @@ export default function StudentGradesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course) => (
-              <div key={course._id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+              <div key={course._id} className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-4">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 font-mono border border-indigo-100">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 font-mono ring-1 ring-inset ring-indigo-700/10">
                       {course.code}
                     </span>
                   </div>

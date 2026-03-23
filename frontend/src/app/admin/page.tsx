@@ -91,33 +91,33 @@ export default function AdminDashboard() {
           <div className="space-y-8">
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Students</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.totalStudents}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Students</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalStudents}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Instructors</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.totalInstructors}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Instructors</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalInstructors}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Courses</span>
-                <div className="mt-2 text-3xl font-black text-slate-900">{data.totalCourses}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Courses</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalCourses}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Enrollments</span>
-                <div className="mt-2 text-3xl font-black text-indigo-600">{data.totalEnrollments}</div>
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Enrollments</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-indigo-600">{data.totalEnrollments}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-amber-200 p-5 bg-amber-50/30">
-                <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">Pending Users</span>
-                <div className="mt-2 text-3xl font-black text-amber-600">{data.pendingUsers}</div>
+              <div className="bg-amber-50 rounded-xl shadow-sm ring-1 ring-amber-200/80 p-5">
+                <span className="text-xs font-semibold text-amber-700 uppercase tracking-wider">Pending Users</span>
+                <div className="mt-2 text-3xl font-bold tracking-tight text-amber-600">{data.pendingUsers}</div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Recent Users */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Users</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Users</h3>
                 </div>
                 {data.recentUsers && data.recentUsers.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -139,9 +139,9 @@ export default function AdminDashboard() {
               </div>
 
               {/* Recent Courses */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Courses</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Courses</h3>
                 </div>
                 {data.recentCourses && data.recentCourses.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -158,9 +158,9 @@ export default function AdminDashboard() {
               </div>
 
               {/* Recent Enrollments */}
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                  <h3 className="font-bold text-slate-900">Recent Enrollments</h3>
+              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
+                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
+                  <h3 className="font-semibold text-slate-900">Recent Enrollments</h3>
                 </div>
                 {data.recentEnrollments && data.recentEnrollments.length > 0 ? (
                   <ul className="divide-y divide-slate-100">

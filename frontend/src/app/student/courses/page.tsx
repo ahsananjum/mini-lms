@@ -71,15 +71,11 @@ export default function StudentCoursesPage() {
         </div>
 
         {loading ? (
-          <div className="text-center p-12 text-slate-500 bg-white rounded-2xl border border-slate-200 shadow-sm">
-            Loading your courses...
-          </div>
+           <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">Loading courses...</div>
         ) : error ? (
-          <div className="text-center p-8 bg-white border border-rose-200 rounded-2xl font-medium text-rose-500 shadow-sm">
-            {error}
-          </div>
+           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">{error}</div>
         ) : courses.length === 0 ? (
-          <div className="text-center p-16 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col items-center">
+           <div className="p-16 text-center bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6 flex flex-col items-center">
             <svg className="w-16 h-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
@@ -89,10 +85,10 @@ export default function StudentCoursesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map(course => (
-              <div key={course._id} className="bg-white border flex flex-col h-full border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-indigo-300 transition-all group overflow-hidden">
+              <div key={course._id} className="bg-white flex flex-col h-full ring-1 ring-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:ring-indigo-300 transition-all group overflow-hidden">
                 <div className="p-6 flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-4 gap-2">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-50 text-indigo-700 font-mono tracking-tight shrink-0 border border-indigo-100">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 font-mono tracking-tight shrink-0 ring-1 ring-inset ring-indigo-700/10">
                       {course.code}
                     </span>
                   </div>

@@ -29,9 +29,12 @@ export default function PendingApprovalPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] p-8 bg-slate-50">
-      <div className="w-full max-w-md bg-white p-10 rounded-2xl shadow-sm border border-slate-200 text-center">
-        <PageHeader title="Pending Approval" />
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-8 bg-slate-50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-100/50 via-slate-50/20 to-slate-50 pointer-events-none" />
+      <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl shadow-xl shadow-slate-200/40 border border-slate-200/60 text-center relative z-10">
+        <div className="mb-2">
+          <PageHeader title="Approval Needed" description="Your account is being reviewed" />
+        </div>
         
         <EmptyState 
           icon={Clock}

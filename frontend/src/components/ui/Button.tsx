@@ -13,17 +13,17 @@ export function Button({
   disabled, 
   ...props 
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98]";
+  const baseStyles = "inline-flex items-center justify-center px-4 py-2 text-sm rounded-lg transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]";
   
   const variants = {
-    primary: "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow focus:ring-indigo-500 border border-transparent",
-    secondary: "bg-white text-slate-700 hover:bg-slate-50 shadow-sm border border-slate-300 focus:ring-slate-500",
-    danger: "bg-rose-600 text-white hover:bg-rose-700 shadow-sm hover:shadow focus:ring-rose-500 border border-transparent",
+    primary: "bg-indigo-600 text-white font-semibold shadow-sm hover:shadow hover:bg-indigo-500 focus-visible:outline-indigo-600",
+    secondary: "bg-white text-slate-800 font-semibold shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 hover:ring-slate-400 focus-visible:outline-indigo-600",
+    danger: "bg-rose-600 text-white font-semibold shadow-sm hover:shadow hover:bg-rose-500 focus-visible:outline-rose-600",
   };
 
   return (
     <button
-      className={`${baseStyles} ${variants[variant]} ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      className={`${baseStyles} ${variants[variant]} ${className}`}
       disabled={disabled || isLoading}
       {...props}
     >

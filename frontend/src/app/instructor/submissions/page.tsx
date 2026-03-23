@@ -92,23 +92,23 @@ export default function InstructorSubmissionsOverview() {
         ) : data ? (
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex items-center justify-between">
+              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-6 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-500">Graded Assignments</p>
-                  <p className="mt-1 text-3xl font-black text-slate-900">{data.summary.gradedAssignmentsCount}</p>
+                  <p className="text-sm font-semibold text-slate-500">Graded Assignments</p>
+                  <p className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{data.summary.gradedAssignmentsCount}</p>
                 </div>
-                <div className="p-3 bg-indigo-50 rounded-lg">
+                <div className="p-3 bg-indigo-50 rounded-lg ring-1 ring-inset ring-indigo-700/10">
                   <svg className="w-8 h-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                   </svg>
                 </div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-amber-200 p-6 flex items-center justify-between bg-amber-50/10">
+              <div className="bg-amber-50/50 rounded-xl shadow-sm ring-1 ring-amber-200/80 p-6 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-amber-700">Pending Grading</p>
-                  <p className="mt-1 text-3xl font-black text-amber-600">{data.summary.pendingGradingCount}</p>
+                  <p className="text-sm font-semibold text-amber-700">Pending Grading</p>
+                  <p className="mt-1 text-3xl font-bold tracking-tight text-amber-600">{data.summary.pendingGradingCount}</p>
                 </div>
-                <div className="p-3 bg-amber-100 rounded-lg">
+                <div className="p-3 bg-amber-100 rounded-lg ring-1 ring-inset ring-amber-700/10">
                   <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -120,32 +120,32 @@ export default function InstructorSubmissionsOverview() {
                <div className="text-center p-16 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col items-center">
                 <svg className="w-16 h-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">No graded assignments found</h3>
-                <p className="text-slate-500 max-w-sm mb-6">You don't have any graded assignments yet. Create one in your courses to start receiving submissions.</p>
+                <p className="text-slate-500 max-w-sm mb-6">You don&apos;t have any graded assignments yet. Create one in your courses to start receiving submissions.</p>
                 <Link href="/instructor/courses" className="px-6 py-2.5 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition lg:rounded-lg">
                   Go to Courses
                 </Link>
               </div>
             ) : (
-              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden">
+              <div className="bg-white shadow-sm ring-1 ring-slate-200 rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-slate-200">
-                    <thead className="bg-slate-50 border-b border-slate-200">
+                    <thead className="bg-slate-50/80">
                       <tr>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
                           Assignment Details
                         </th>
-                        <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:table-cell">
+                        <th scope="col" className="px-6 py-3.5 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider hidden sm:table-cell">
                           Progress
                         </th>
-                        <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3.5 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">
                           Pending
                         </th>
-                        <th scope="col" className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3.5 font-semibold text-slate-600 uppercase tracking-wider">
                           <span className="sr-only">Actions</span>
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-slate-100">
+                    <tbody className="bg-white divide-y divide-slate-200/60">
                       {data.assignments.map((assignment) => (
                         <tr key={assignment.assignmentId} className="hover:bg-slate-50/50 transition-colors">
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -195,7 +195,7 @@ export default function InstructorSubmissionsOverview() {
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <Link href={`/instructor/assignments/${assignment.assignmentId}/submissions`} className="inline-flex items-center px-3 py-2 border border-slate-200 text-sm leading-4 font-medium rounded-lg text-indigo-700 bg-white hover:bg-indigo-50 hover:border-indigo-200 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm">
+                            <Link href={`/instructor/assignments/${assignment.assignmentId}/submissions`} className="inline-flex items-center px-3 py-2 border border-slate-200 text-sm leading-4 font-semibold rounded-lg text-indigo-700 bg-white hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm ring-1 ring-inset ring-slate-300">
                               View Submissions
                             </Link>
                           </td>

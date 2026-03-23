@@ -121,20 +121,20 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
         )}
 
         {loading ? (
-          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">
+          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">
             Loading assignment...
           </div>
         ) : error || !data ? (
-           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm border border-rose-100 mt-6">
+           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm ring-1 ring-rose-200 mt-6">
             {error || 'Assignment not found'}
           </div>
         ) : (
           <div className="space-y-6">
             
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-8">
               <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
                  <div>
-                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold mb-3 border tracking-wider ${data.assignment.gradingType === 'graded' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-50 text-slate-700 border-slate-200'}`}>
+                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold mb-3 tracking-wider ring-1 ring-inset ${data.assignment.gradingType === 'graded' ? 'bg-emerald-50 text-emerald-700 ring-emerald-600/20' : 'bg-slate-50 text-slate-700 ring-slate-500/10'}`}>
                      {data.assignment.gradingType === 'graded' ? 'GRADED ASSIGNMENT' : 'UNGRADED ASSIGNMENT'}
                    </span>
                    <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">{data.assignment.title}</h1>
@@ -151,8 +151,8 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
                  </div>
 
                 {/* Status Badge */}
-                <div className="shrink-0 bg-slate-50 p-4 border border-slate-100 rounded-xl min-w-[200px]">
-                   <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Submission Status</h3>
+                <div className="shrink-0 bg-slate-50 p-4 ring-1 ring-slate-200 rounded-xl min-w-[200px]">
+                   <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Submission Status</h3>
                    {(!data.submission || data.submission.status === 'not_submitted') && (
                      <div className="inline-flex items-center gap-2 text-sm font-bold text-amber-600 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 w-full">
                        <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
@@ -185,7 +185,7 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
             </div>
 
             {/* Submission Section */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden">
                <div className="bg-slate-50 border-b border-slate-200 px-8 py-5 flex items-center gap-3">
                  <div className="bg-indigo-100 text-indigo-600 p-2 rounded-lg">
                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -195,7 +195,7 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
                
                <div className="p-8">
                  {data.assignment.gradingType === 'ungraded' && (
-                   <div className="mb-6 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl p-4 text-sm flex items-start gap-3">
+                   <div className="mb-6 bg-slate-50 ring-1 ring-slate-200 text-slate-700 rounded-xl p-4 text-sm flex items-start gap-3">
                      <svg className="w-5 h-5 shrink-0 text-slate-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                      </svg>
@@ -205,7 +205,7 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
 
                  {/* Current Submission Display */}
                  {data.submission?.fileUrl && (
-                   <div className="mb-8 bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-center justify-between gap-4">
+                   <div className="mb-8 bg-slate-50 ring-1 ring-slate-200 p-4 rounded-xl flex items-center justify-between gap-4">
                      <div className="flex items-center gap-3 overflow-hidden">
                         <svg className="w-8 h-8 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                         <div className="truncate">
@@ -241,20 +241,20 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
                    </form>
                  ) : (
                    /* Grading Results Block */
-                   <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mt-6">
-                      <h3 className="text-sm font-bold text-emerald-900 uppercase tracking-wider mb-4 border-b border-emerald-200/50 pb-2">Grading Results</h3>
+                   <div className="bg-emerald-50/50 ring-1 ring-emerald-200 rounded-xl p-6 mt-6">
+                      <h3 className="text-sm font-semibold text-emerald-800 uppercase tracking-wider mb-4 border-b border-emerald-200/50 pb-2">Grading Results</h3>
                       <div className="flex flex-col sm:flex-row gap-6">
-                        <div className="shrink-0 bg-white border border-emerald-100 shadow-sm p-4 rounded-xl flex flex-col items-center justify-center min-w-[120px]">
+                        <div className="shrink-0 bg-white ring-1 ring-emerald-100 shadow-sm p-4 rounded-xl flex flex-col items-center justify-center min-w-[120px]">
                           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Score</span>
                           <div className="text-3xl font-black text-emerald-600 tracking-tighter">
                             {data.submission.marks}
                             <span className="text-lg font-bold text-slate-400">/{data.assignment.totalMarks}</span>
                           </div>
                         </div>
-                        <div className="flex-1 bg-white border border-emerald-100 shadow-sm p-4 rounded-xl text-sm text-slate-700 whitespace-pre-wrap">
+                        <div className="flex-1 bg-white ring-1 ring-emerald-100 shadow-sm p-4 rounded-xl text-sm text-slate-700 whitespace-pre-wrap">
                            {data.submission.feedback ? (
                              <>
-                               <span className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Feedback</span>
+                               <span className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Feedback</span>
                                {data.submission.feedback}
                              </>
                            ) : (

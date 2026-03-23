@@ -92,11 +92,11 @@ export default function AdminCoursesPage() {
           description="Manage standard courses, assign instructors, and handle student enrollments." 
         />
         
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden mt-6">
-          <div className="p-6 border-b border-slate-200 bg-slate-50/50 flex flex-col md:flex-row md:items-end gap-5 justify-between">
+        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 flex flex-col overflow-hidden mt-6">
+          <div className="p-6 border-b border-slate-200 bg-white flex flex-col md:flex-row md:items-end gap-5 justify-between">
             <div className="flex flex-col md:flex-row gap-5 items-end flex-grow">
               <div className="w-full md:w-1/2">
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Search Courses</label>
+                <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Search Courses</label>
                 <Input 
                   type="text" 
                   placeholder="Course title or code..." 
@@ -121,16 +121,16 @@ export default function AdminCoursesPage() {
           
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50 border-b border-slate-200">
+              <thead className="bg-slate-50/80">
                 <tr>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Title</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Code</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Instructor</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Created Date</th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Title</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Code</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Instructor</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Created Date</th>
+                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-slate-100 text-sm">
+              <tbody className="bg-white divide-y divide-slate-200/60 text-sm">
                 {loading ? (
                   <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-500">Loading courses...</td></tr>
                 ) : error ? (

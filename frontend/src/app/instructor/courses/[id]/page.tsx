@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect, use, useRef } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
-import { PageHeader } from '@/components/ui/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { apiFetch } from '@/lib/api';
@@ -211,9 +210,9 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
         ) : (
           <div className="space-y-8">
             {/* Header */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-8 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-50 text-indigo-700 font-mono mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 font-mono mb-4 ring-1 ring-inset ring-indigo-700/10">
                   {course.code}
                 </span>
                 <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-4">{course.title}</h1>
@@ -253,7 +252,7 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
                 ) : (
                   <div className="space-y-6">
                     {modules.map((mod) => (
-                      <div key={mod._id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                      <div key={mod._id} className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 overflow-hidden">
                         {editModuleId === mod._id ? (
                            <div className="p-6 bg-slate-50 border-b border-slate-200">
                              <h3 className="text-sm font-semibold mb-3 text-slate-700">Edit Module</h3>
@@ -273,8 +272,8 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
                         ) : (
                            <div className="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-start group">
                              <div>
-                                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-3">
-                                  <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">{mod.order}</span>
+                                <h3 className="text-base font-semibold text-slate-900 flex items-center gap-3">
+                                  <span className="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 ring-1 ring-inset ring-indigo-700/10 flex items-center justify-center text-xs font-bold">{mod.order}</span>
                                   {mod.title}
                                 </h3>
                                 {mod.description && <p className="text-slate-600 mt-2 text-sm ml-9">{mod.description}</p>}
@@ -288,7 +287,7 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
                         
                         {/* Materials Section inside Module */}
                         <div className="p-6">
-                          <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 ml-9">Learning Materials</h4>
+                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 ml-9">Learning Materials</h4>
                           
                           {mod.materials?.length > 0 ? (
                             <ul className="ml-9 mb-6 space-y-3">
@@ -354,7 +353,7 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
                  <h2 className="text-2xl font-bold text-slate-900">Announcements</h2>
                  
                  {/* Create Announcement */}
-                 <form onSubmit={handleCreateAnnouncement} className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col gap-4">
+                 <form onSubmit={handleCreateAnnouncement} className="bg-white p-5 rounded-xl shadow-sm ring-1 ring-slate-200 flex flex-col gap-4">
                     <h3 className="text-sm font-semibold text-slate-700">Post New Announcement</h3>
                     <Input required placeholder="Announcement Title" value={newAnnTitle} onChange={e => setNewAnnTitle(e.target.value)} />
                     <textarea 

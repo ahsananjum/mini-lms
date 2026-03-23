@@ -72,28 +72,28 @@ export default function StudentCourseGradesPage({ params }: { params: Promise<{ 
         </Link>
         
         {loading ? (
-          <div className="text-center p-12 text-slate-500 bg-white rounded-2xl border border-slate-200 shadow-sm mt-6">
+          <div className="text-center p-12 text-slate-500 bg-white rounded-2xl ring-1 ring-slate-200 shadow-sm mt-6">
             Loading grades...
           </div>
         ) : error ? (
-          <div className="text-center p-8 bg-white border border-rose-200 rounded-2xl font-medium text-rose-500 shadow-sm mt-6">
+          <div className="text-center p-8 bg-white ring-1 ring-rose-200 rounded-2xl font-medium text-rose-500 shadow-sm mt-6">
             {error}
           </div>
         ) : (
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-8">
                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{courseTitle}</h1>
                <p className="text-slate-500 mt-2 font-medium">Graded Assignments</p>
             </div>
 
             {grades.length === 0 ? (
-               <div className="text-center p-16 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col items-center">
+               <div className="text-center p-16 bg-white ring-1 ring-slate-200 rounded-2xl shadow-sm flex flex-col items-center">
                 <svg className="w-16 h-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <h3 className="text-lg font-bold text-slate-900 mb-2">No grades available for this course yet.</h3>
                 <p className="text-slate-500 max-w-sm">When instructors grade your assignments, the marks and feedback will appear here.</p>
               </div>
             ) : (
-              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden overflow-x-auto">
+              <div className="bg-white shadow-sm ring-1 ring-slate-200 rounded-2xl overflow-hidden overflow-x-auto">
                 <table className="min-w-full divide-y divide-slate-200">
                   <thead className="bg-slate-50 border-b border-slate-200">
                     <tr>
@@ -124,14 +124,14 @@ export default function StudentCourseGradesPage({ params }: { params: Promise<{ 
                           {grade.submittedAt ? new Date(grade.submittedAt).toLocaleDateString() : 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center">
-                          <div className="inline-flex items-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100">
-                            <span className="text-lg font-black text-emerald-600 leading-none">{grade.obtainedMarks}</span>
-                            <span className="text-xs font-bold text-slate-400 leading-none pb-0.5">/{grade.totalMarks}</span>
+                          <div className="inline-flex items-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-lg ring-1 ring-inset ring-emerald-600/20">
+                            <span className="text-lg font-bold text-emerald-600 leading-none">{grade.obtainedMarks}</span>
+                            <span className="text-xs font-semibold text-slate-500 leading-none pb-0.5">/{grade.totalMarks}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 hidden md:table-cell">
                           {grade.feedback ? (
-                            <div className="text-sm text-slate-600 line-clamp-2 italic" title={grade.feedback}>"{grade.feedback}"</div>
+                            <div className="text-sm text-slate-600 line-clamp-2 italic" title={grade.feedback}>&quot;{grade.feedback}&quot;</div>
                           ) : (
                             <span className="text-sm text-slate-400 italic">None</span>
                           )}
