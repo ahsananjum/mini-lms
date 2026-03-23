@@ -40,9 +40,9 @@ export default function StudentGradesPage() {
     setError(null);
     try {
       // The backend returns the list of courses with grades for this endpoint now
-      const res = await apiFetch<any>('/student/grades');
+      const res = await apiFetch<{ success: boolean; message?: string; data?: { courses: Course[] } | Course[] }>('/student/grades');
       if (res.success && res.data) {
-        setCourses(res.data.courses || res.data);
+        setCourses(('courses' in res.data ? (res.data as { courses: Course[] }).courses : res.data as Course[]) || []);
       } else {
         throw new Error(res.message || 'Failed to load courses');
       }
@@ -56,37 +56,37 @@ export default function StudentGradesPage() {
   if (authLoading || !user || user.role !== 'student') return <div className="p-8 text-center text-slate-500">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-8 pb-20">
+    <div className="min-h-[calc(100vh-80px)] bg-surface pt-8 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-8">
+        <h1 className="text-3xl font-bold text-on-surface tracking-tight mb-8">
           Grades
         </h1>
 
         {loading ? (
-           <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">Loading courses...</div>
+           <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">Loading courses...</div>
         ) : error ? (
-           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">{error}</div>
+           <div className="p-12 text-center text-error font-medium bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-error/30 mt-6">{error}</div>
         ) : courses.length === 0 ? (
-           <div className="p-16 text-center bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6 flex flex-col items-center">
-            <svg className="w-16 h-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">No courses found</h3>
-            <p className="text-slate-500 max-w-sm">You do not have any enrolled courses to view grades for.</p>
+           <div className="p-20 text-center bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6 flex flex-col items-center">
+            <svg className="w-16 h-16 text-slate-300 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+            <h3 className="text-xl font-bold text-on-surface mb-3 tracking-tight">No courses found</h3>
+            <p className="text-slate-500 max-w-sm font-medium">You do not have any enrolled courses to view grades for.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course) => (
-              <div key={course._id} className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 font-mono ring-1 ring-inset ring-indigo-700/10">
+              <div key={course._id} className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 hover:ring-primary/20 transition-all duration-300 group">
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="flex justify-between items-start mb-6">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-primary/10 text-primary ring-1 ring-inset ring-primary/20">
                       {course.code}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">{course.title}</h3>
-                  <div className="mt-auto pt-6">
+                  <h3 className="text-2xl font-bold text-on-surface tracking-tight mb-4 group-hover:text-primary transition-colors">{course.title}</h3>
+                  <div className="mt-auto pt-8">
                     <Link href={`/student/grades/${course._id}`} className="block w-full">
-                      <Button variant="primary" className="w-full justify-center">
-                        View Grades &rarr;
+                      <Button variant="secondary" className="w-full justify-center bg-surface-container-low hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 shadow-sm py-2.5 text-sm font-semibold">
+                        View Grades
                       </Button>
                     </Link>
                   </div>

@@ -1,7 +1,7 @@
 import { API_BASE_URL } from './constants';
 
 interface FetchOptions extends RequestInit {
-  data?: any;
+  data?: unknown;
 }
 
 export async function apiFetch<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
@@ -36,7 +36,7 @@ export async function apiFetch<T>(endpoint: string, options: FetchOptions = {}):
     let result;
     try {
       result = textDesc ? JSON.parse(textDesc) : {};
-    } catch (e) {
+    } catch {
       if (response.ok) {
         return { success: true, message: 'Success', data: {} } as T;
       }
@@ -49,11 +49,11 @@ export async function apiFetch<T>(endpoint: string, options: FetchOptions = {}):
     }
 
     return result as T;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Return a structured error
     return {
       success: false,
-      message: error.message || 'Network error occurred',
+      message: (error as Error).message || 'Network error occurred',
       errors: []
     } as T;
   }

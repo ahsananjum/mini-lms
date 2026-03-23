@@ -62,8 +62,8 @@ export default function InstructorAssignmentsPage({ params }: { params: Promise<
     setError(null);
     try {
       const [courseRes, assignmentsRes] = await Promise.all([
-        apiFetch<any>(`/instructor/courses/${courseId}`),
-        apiFetch<any>(`/instructor/courses/${courseId}/assignments`)
+        apiFetch<any>(`/instructor/courses/${courseId}`), // eslint-disable-line @typescript-eslint/no-explicit-any
+        apiFetch<any>(`/instructor/courses/${courseId}/assignments`) // eslint-disable-line @typescript-eslint/no-explicit-any
       ]);
 
       if (!courseRes.success) throw new Error(courseRes.message || 'Failed to load course');
@@ -84,7 +84,7 @@ export default function InstructorAssignmentsPage({ params }: { params: Promise<
     if (!title.trim() || !dueDate) return;
     
     try {
-      const res = await apiFetch<any>(`/instructor/courses/${courseId}/assignments`, {
+      const res = await apiFetch<any>(`/instructor/courses/${courseId}/assignments`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'POST',
         body: JSON.stringify({
           title,
@@ -106,8 +106,8 @@ export default function InstructorAssignmentsPage({ params }: { params: Promise<
       } else {
         alert(res.message);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 
@@ -115,74 +115,74 @@ export default function InstructorAssignmentsPage({ params }: { params: Promise<
     if (!confirm('Are you sure you want to delete this assignment?')) return;
     
     try {
-      const res = await apiFetch<any>(`/instructor/assignments/${assignmentId}`, {
+      const res = await apiFetch<any>(`/instructor/assignments/${assignmentId}`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'DELETE'
       });
       if (res.success) fetchData();
       else alert(res.message);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 
   if (authLoading || !user || user.role !== 'instructor') return <div className="p-8 text-center text-slate-500">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
+    <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href={`/instructor/courses/${courseId}`} className="text-sm font-medium text-indigo-600 hover:text-indigo-700 mb-6 inline-block">
+        <Link href={`/instructor/courses/${courseId}`} className="text-sm font-medium text-primary hover:text-primary/80 mb-6 inline-block">
           &larr; Back to Course
         </Link>
         
         {loading ? (
-          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">Loading assignments...</div>
+          <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">Loading assignments...</div>
         ) : error || !course ? (
-          <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">{error || 'Course not found'}</div>
+          <div className="p-12 text-center text-error font-medium bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-error/30 mt-6">{error || 'Course not found'}</div>
         ) : (
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Assignments</h1>
+                <h1 className="text-3xl font-bold text-on-surface tracking-tight">Assignments</h1>
                 <p className="text-slate-500 mt-1">{course.code} • {course.title}</p>
               </div>
               {!isCreating && (
-                <Button variant="primary" onClick={() => setIsCreating(true)}>
+                <Button variant="primary" onClick={() => setIsCreating(true)} className="px-6 py-2.5 shadow-sm">
                   Create Assignment
                 </Button>
               )}
             </div>
 
             {isCreating && (
-              <form onSubmit={handleCreateAssignment} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4 relative">
-                <button type="button" onClick={() => setIsCreating(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+              <form onSubmit={handleCreateAssignment} className="bg-surface-container-lowest p-8 rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 space-y-6 relative">
+                <button type="button" onClick={() => setIsCreating(false)} className="absolute top-6 right-6 p-2 text-slate-400 hover:text-on-surface rounded-xl bg-surface-container-low transition-colors">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
-                <h2 className="text-lg font-bold text-slate-900 mb-4">New Assignment</h2>
+                <h2 className="text-xl font-bold text-on-surface tracking-tight mb-4">New Assignment</h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-slate-700">Title</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest">Title</label>
                     <Input required placeholder="Assignment Title" value={title} onChange={e => setTitle(e.target.value)} />
                   </div>
-                  <div className="space-y-1">
-                     <label className="text-sm font-medium text-slate-700">Due Date</label>
+                  <div className="space-y-2">
+                     <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest">Due Date</label>
                      <Input required type="datetime-local" value={dueDate} onChange={e => setDueDate(e.target.value)} />
                   </div>
                   
-                  <div className="space-y-1 md:col-span-2">
-                    <label className="text-sm font-medium text-slate-700">Assignment Type</label>
-                    <div className="flex bg-slate-100 p-1 rounded-lg w-fit">
+                  <div className="space-y-3 md:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest">Assignment Type</label>
+                    <div className="flex bg-surface-container-low p-1.5 rounded-xl w-fit ring-1 ring-inset ring-outline-variant/10">
                       <button
                         type="button"
                         onClick={() => setGradingType('graded')}
-                        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${gradingType === 'graded' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                        className={`px-5 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${gradingType === 'graded' ? 'bg-surface-container-lowest text-primary shadow-sm ring-1 ring-outline-variant/15' : 'text-slate-600 hover:text-on-surface hover:bg-surface-container-low/50'}`}
                       >
                         Graded Assignment
                       </button>
                       <button
                         type="button"
                         onClick={() => setGradingType('ungraded')}
-                        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${gradingType === 'ungraded' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                        className={`px-5 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${gradingType === 'ungraded' ? 'bg-surface-container-lowest text-primary shadow-sm ring-1 ring-outline-variant/15' : 'text-slate-600 hover:text-on-surface hover:bg-surface-container-low/50'}`}
                       >
                         Ungraded Assignment
                       </button>
@@ -190,80 +190,80 @@ export default function InstructorAssignmentsPage({ params }: { params: Promise<
                   </div>
 
                   {gradingType === 'graded' ? (
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-slate-700">Total Marks</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest">Total Marks</label>
                       <Input required type="number" min={1} value={totalMarks} onChange={e => setTotalMarks(Number(e.target.value))} />
                     </div>
                   ) : (
-                    <div className="space-y-1 md:col-span-2">
-                      <p className="text-sm text-slate-500 italic bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <div className="space-y-2 md:col-span-2">
+                      <p className="text-sm text-slate-500 italic bg-amber-50/40 p-4 rounded-xl border border-amber-200/50">
                         Ungraded assignments accept submissions but cannot receive marks.
                       </p>
                     </div>
                   )}
 
-                  <div className="space-y-1 md:col-span-2">
-                    <label className="text-sm font-medium text-slate-700">Description (Optional)</label>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest">Description (Optional)</label>
                     <textarea 
-                       placeholder="Instructions for students..." rows={3}
-                       className="w-full px-4 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                       placeholder="Instructions for students..." rows={4}
+                       className="w-full px-4 py-3 text-base bg-surface-container-lowest shadow-sm ring-1 ring-inset ring-outline-variant/15 outline-none transition-all duration-300 focus:ring-[4px] focus:ring-primary/40 hover:ring-outline-variant/30 rounded-xl"
                        value={description} onChange={e => setDescription(e.target.value)}
                     />
                   </div>
                 </div>
-                <div className="pt-2 flex justify-end">
-                  <Button variant="primary" type="submit">Create Assignment</Button>
+                <div className="pt-4 flex justify-end">
+                  <Button variant="primary" type="submit" className="px-8 py-2.5">Create Assignment</Button>
                 </div>
               </form>
             )}
 
-            <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden">
-              <table className="min-w-full divide-y divide-slate-200">
-                <thead className="bg-slate-50">
+            <div className="bg-surface-container-lowest shadow-ambient ring-1 ring-outline-variant/15 rounded-[2rem] overflow-hidden">
+              <table className="min-w-full divide-y divide-outline-variant/10">
+                <thead className="bg-surface/50">
                   <tr>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Title</th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Due Date</th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Marks</th>
-                    <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                    <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Title</th>
+                    <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Type</th>
+                    <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Due Date</th>
+                    <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Marks</th>
+                    <th scope="col" className="px-8 py-5 text-right text-xs font-semibold text-on-surface uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-slate-200">
+                <tbody className="bg-surface-container-lowest divide-y divide-outline-variant/10">
                   {assignments.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-12 text-center text-sm text-slate-500 italic">
+                      <td colSpan={5} className="px-8 py-16 text-center text-sm text-slate-500 italic">
                         No assignments have been created yet.
                       </td>
                     </tr>
                   ) : (
                     assignments.map((assignment) => (
-                      <tr key={assignment._id} className="hover:bg-slate-50 transition-colors group">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <Link href={`/instructor/assignments/${assignment._id}`} className="font-semibold text-indigo-600 hover:text-indigo-900 hover:underline">
+                      <tr key={assignment._id} className="hover:bg-surface-container-low/50 transition-colors group">
+                        <td className="px-8 py-6 whitespace-nowrap">
+                          <Link href={`/instructor/assignments/${assignment._id}`} className="font-bold text-primary hover:text-primary/80 hover:underline">
                             {assignment.title}
                           </Link>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${assignment.gradingType === 'graded' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}`}>
+                        <td className="px-8 py-6 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ring-1 ring-inset ${assignment.gradingType === 'graded' ? 'bg-primary/10 text-primary ring-primary/20' : 'bg-surface-container-low text-slate-600 ring-outline-variant/15'}`}>
                             {assignment.gradingType === 'graded' ? 'Graded' : 'Ungraded'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-slate-900">{new Date(assignment.dueDate).toLocaleString()}</div>
+                        <td className="px-8 py-6 whitespace-nowrap">
+                          <div className="text-sm font-medium text-slate-600">{new Date(assignment.dueDate).toLocaleString()}</div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                        <td className="px-8 py-6 whitespace-nowrap text-sm font-medium text-slate-500">
                           {assignment.gradingType === 'graded' ? assignment.totalMarks : '—'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                           <div className="flex justify-end items-center gap-3">
-                              <Link href={`/instructor/assignments/${assignment._id}/submissions`} className="text-indigo-600 hover:text-indigo-900 border border-slate-200 hover:bg-slate-50 px-3 py-1.5 rounded-lg text-xs font-medium">
+                        <td className="px-8 py-6 whitespace-nowrap text-right text-sm font-medium">
+                           <div className="flex justify-end items-center gap-4">
+                              <Link href={`/instructor/assignments/${assignment._id}/submissions`} className="inline-flex items-center px-4 py-2 border border-outline-variant/20 text-xs font-bold rounded-lg text-on-surface bg-surface-container-lowest hover:bg-surface-container-low transition-colors shadow-sm focus:ring-[4px] focus:ring-primary/40">
                                 View Submissions
                               </Link>
                               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity ml-2">
-                                <Link href={`/instructor/assignments/${assignment._id}`} className="text-slate-500 hover:text-indigo-600 px-2 py-1 text-xs font-medium">
+                                <Link href={`/instructor/assignments/${assignment._id}`} className="text-slate-500 hover:text-primary px-3 py-1.5 text-xs font-bold rounded-lg hover:bg-surface-container-low transition-colors">
                                   Edit
                                 </Link>
-                                <button onClick={() => handleDelete(assignment._id)} className="text-slate-500 hover:text-rose-600 px-2 py-1 text-xs font-medium">
+                                <button onClick={() => handleDelete(assignment._id)} className="text-slate-500 hover:text-error px-3 py-1.5 text-xs font-bold rounded-lg hover:bg-error/10 transition-colors">
                                   Delete
                                 </button>
                               </div>

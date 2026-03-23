@@ -44,7 +44,7 @@ export default function AdminDashboard() {
     setLoading(true);
     setError(null);
     try {
-      const res = await apiFetch<any>('/admin/dashboard');
+      const res = await apiFetch<any>('/admin/dashboard'); // eslint-disable-line @typescript-eslint/no-explicit-any
       if (res.success && res.data) {
         setData(res.data);
       } else {
@@ -62,7 +62,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-8 pb-20">
+    <div className="min-h-[calc(100vh-80px)] bg-surface pt-12 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-8">
           <div>
@@ -80,44 +80,44 @@ export default function AdminDashboard() {
         </div>
 
         {loading ? (
-          <div className="text-center p-12 text-slate-500 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div className="text-center p-16 text-slate-500 bg-surface-container-lowest rounded-[2rem] ring-1 ring-outline-variant/15 shadow-ambient">
             Loading dashboard data...
           </div>
         ) : error ? (
-          <div className="text-center p-8 bg-white border border-rose-200 rounded-2xl font-medium text-rose-500 shadow-sm">
+          <div className="text-center p-12 bg-surface-container-lowest ring-1 ring-error/30 rounded-[2rem] font-medium text-error shadow-ambient">
             {error}
           </div>
         ) : data && (
           <div className="space-y-8">
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Students</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalStudents}</div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Total Students</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.totalStudents}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Instructors</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalInstructors}</div>
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Instructors</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.totalInstructors}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Courses</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalCourses}</div>
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Total Courses</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.totalCourses}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Enrollments</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-indigo-600">{data.totalEnrollments}</div>
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Enrollments</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-primary">{data.totalEnrollments}</div>
               </div>
-              <div className="bg-amber-50 rounded-xl shadow-sm ring-1 ring-amber-200/80 p-5">
-                <span className="text-xs font-semibold text-amber-700 uppercase tracking-wider">Pending Users</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-amber-600">{data.pendingUsers}</div>
+              <div className="bg-amber-50/40 rounded-[1.5rem] shadow-ambient ring-1 ring-amber-200/50 p-6">
+                <span className="text-[10px] font-semibold text-amber-700 uppercase tracking-widest">Pending Users</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-amber-600">{data.pendingUsers}</div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Recent Users */}
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
-                  <h3 className="font-semibold text-slate-900">Recent Users</h3>
+              <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden col-span-1">
+                <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+                  <h3 className="font-semibold text-on-surface tracking-wide">Recent Users</h3>
                 </div>
                 {data.recentUsers && data.recentUsers.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -139,9 +139,9 @@ export default function AdminDashboard() {
               </div>
 
               {/* Recent Courses */}
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
-                  <h3 className="font-semibold text-slate-900">Recent Courses</h3>
+              <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden col-span-1">
+                <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+                  <h3 className="font-semibold text-on-surface tracking-wide">Recent Courses</h3>
                 </div>
                 {data.recentCourses && data.recentCourses.length > 0 ? (
                   <ul className="divide-y divide-slate-100">
@@ -158,9 +158,9 @@ export default function AdminDashboard() {
               </div>
 
               {/* Recent Enrollments */}
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
-                  <h3 className="font-semibold text-slate-900">Recent Enrollments</h3>
+              <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden col-span-1">
+                <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+                  <h3 className="font-semibold text-on-surface tracking-wide">Recent Enrollments</h3>
                 </div>
                 {data.recentEnrollments && data.recentEnrollments.length > 0 ? (
                   <ul className="divide-y divide-slate-100">

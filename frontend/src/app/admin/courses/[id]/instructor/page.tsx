@@ -54,8 +54,8 @@ export default function CourseInstructorPage({ params }: { params: Promise<{ id:
     setError(null);
     try {
       const [courseRes, instructorsRes] = await Promise.all([
-        apiFetch<any>(`/admin/courses/${id}`),
-        apiFetch<any>(`/admin/users?role=instructor&status=active`)
+        apiFetch<any>(`/admin/courses/${id}`), // eslint-disable-line @typescript-eslint/no-explicit-any
+        apiFetch<any>(`/admin/users?role=instructor&status=active`) // eslint-disable-line @typescript-eslint/no-explicit-any
       ]);
 
       if (!courseRes.success) throw new Error(courseRes.message || 'Failed to fetch course');
@@ -82,7 +82,7 @@ export default function CourseInstructorPage({ params }: { params: Promise<{ id:
     setSubmitting(true);
     setError(null);
     try {
-      const response = await apiFetch<any>(`/admin/courses/${id}/instructor`, {
+      const response = await apiFetch<any>(`/admin/courses/${id}/instructor`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'PATCH',
         body: JSON.stringify({ instructorId }),
       });

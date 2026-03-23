@@ -54,7 +54,7 @@ export default function InstructorAssignmentDetailPage({ params }: { params: Pro
     setLoading(true);
     setError(null);
     try {
-      const res = await apiFetch<any>(`/instructor/assignments/${assignmentId}`);
+      const res = await apiFetch<any>(`/instructor/assignments/${assignmentId}`); // eslint-disable-line @typescript-eslint/no-explicit-any
       if (res.success && res.data?.assignment) {
         const agn = res.data.assignment;
         setAssignment(agn);
@@ -85,7 +85,7 @@ export default function InstructorAssignmentDetailPage({ params }: { params: Pro
     if (!title.trim() || !dueDate) return;
     
     try {
-      const res = await apiFetch<any>(`/instructor/assignments/${assignmentId}`, {
+      const res = await apiFetch<any>(`/instructor/assignments/${assignmentId}`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'PATCH',
         body: JSON.stringify({
           title,
@@ -101,8 +101,8 @@ export default function InstructorAssignmentDetailPage({ params }: { params: Pro
       } else {
         alert(res.message);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 

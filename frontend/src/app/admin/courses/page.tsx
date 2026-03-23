@@ -45,14 +45,13 @@ export default function AdminCoursesPage() {
     try {
       const params = new URLSearchParams();
       if (searchQuery) params.append('search', searchQuery);
-      
-      const response: any = await apiFetch(`/admin/courses?${params.toString()}`);
+      const response = await apiFetch<{ success: boolean; message?: string; data?: { courses: CourseRow[] } }>(`/admin/courses?${params.toString()}`);
       if (!response.success) {
         throw new Error(response.message || 'Failed to fetch courses');
       }
       setCourses(response.data?.courses || []);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while fetching courses');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'An error occurred while fetching courses');
     } finally {
       setLoading(false);
     }
@@ -70,13 +69,13 @@ export default function AdminCoursesPage() {
       return;
     }
     try {
-      const response: any = await apiFetch(`/admin/courses/${id}`, { method: 'DELETE' });
+      const response = await apiFetch<{ success: boolean; message?: string; data?: unknown }>(`/admin/courses/${id}`, { method: 'DELETE' });
       if (!response.success) {
         throw new Error(response.message || 'Failed to delete course');
       }
       await loadCourses(); // Refresh
-    } catch (err: any) {
-      alert(err.message || 'An error occurred while trying to delete the course');
+    } catch (err: unknown) {
+      alert((err as Error).message || 'An error occurred while trying to delete the course');
     }
   };
 
@@ -85,18 +84,18 @@ export default function AdminCoursesPage() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-64px)] p-4 sm:p-8 bg-slate-50 relative">
+    <div className="flex flex-col items-center min-h-[calc(100vh-80px)] p-4 sm:p-8 bg-surface relative">
       <div className="w-full max-w-7xl relative z-10">
         <PageHeader 
           title="Courses Management" 
           description="Manage standard courses, assign instructors, and handle student enrollments." 
         />
         
-        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 flex flex-col overflow-hidden mt-6">
-          <div className="p-6 border-b border-slate-200 bg-white flex flex-col md:flex-row md:items-end gap-5 justify-between">
+        <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 flex flex-col overflow-hidden mt-6">
+          <div className="p-8 border-b border-outline-variant/10 bg-surface-container-low/30 flex flex-col md:flex-row md:items-end gap-5 justify-between">
             <div className="flex flex-col md:flex-row gap-5 items-end flex-grow">
               <div className="w-full md:w-1/2">
-                <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Search Courses</label>
+                <label className="block text-xs uppercase tracking-widest font-medium text-slate-500 mb-2">Search Courses</label>
                 <Input 
                   type="text" 
                   placeholder="Course title or code..." 
@@ -120,17 +119,17 @@ export default function AdminCoursesPage() {
           </div>
           
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50/80">
+            <table className="min-w-full divide-y divide-outline-variant/10">
+              <thead className="bg-surface/50">
                 <tr>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Title</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Code</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Instructor</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Created Date</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider text-right">Actions</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Title</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Code</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Instructor</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Created Date</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-slate-200/60 text-sm">
+              <tbody className="bg-surface-container-lowest divide-y divide-outline-variant/10 text-sm">
                 {loading ? (
                   <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-500">Loading courses...</td></tr>
                 ) : error ? (
@@ -139,15 +138,15 @@ export default function AdminCoursesPage() {
                   <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-500">No courses found matching your filters.</td></tr>
                 ) : (
                   courses.map((course) => (
-                    <tr key={course._id} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-slate-900 font-medium">{course.title}</span>
+                    <tr key={course._id} className="hover:bg-surface-container-low/50 transition-colors">
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <span className="text-on-surface font-medium">{course.title}</span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600 font-medium">{course.code}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-8 py-5 whitespace-nowrap text-slate-600 font-medium">{course.code}</td>
+                      <td className="px-8 py-5 whitespace-nowrap">
                         {course.instructor ? (
                           <div className="flex flex-col">
-                            <span className="text-slate-800">{course.instructor.name}</span>
+                            <span className="text-on-surface">{course.instructor.name}</span>
                             <span className="text-slate-400 text-xs">{course.instructor.email}</span>
                           </div>
                         ) : (
@@ -156,10 +155,10 @@ export default function AdminCoursesPage() {
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-500">
+                      <td className="px-8 py-5 whitespace-nowrap text-slate-500">
                         {new Date(course.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right space-x-2">
+                      <td className="px-8 py-5 whitespace-nowrap text-sm font-medium text-right space-x-2 flex justify-end">
                         <Link href={`/admin/courses/${course._id}/edit`}>
                           <Button variant="secondary" className="!py-1.5 !px-3 text-xs">Edit</Button>
                         </Link>

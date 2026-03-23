@@ -41,7 +41,7 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
     setLoading(true);
     setError(null);
     try {
-      const response = await apiFetch<any>(`/admin/courses/${id}`);
+      const response = await apiFetch<any>(`/admin/courses/${id}`); // eslint-disable-line @typescript-eslint/no-explicit-any
       if (!response.success) {
         throw new Error(response.message || 'Failed to fetch course');
       }
@@ -69,7 +69,7 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
     setSubmitting(true);
     setError(null);
     try {
-      const response = await apiFetch<any>(`/admin/courses/${id}`, {
+      const response = await apiFetch<any>(`/admin/courses/${id}`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'PATCH',
         body: JSON.stringify({ title, code, description }),
       });

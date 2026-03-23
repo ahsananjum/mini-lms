@@ -53,8 +53,8 @@ export default function InstructorDashboard() {
     setError(null);
     try {
       const [res, overviewRes] = await Promise.all([
-         apiFetch<any>('/instructor/dashboard'),
-         apiFetch<any>('/instructor/submissions/overview').catch(() => ({ success: false })) // fail gracefully if endpoint doesn't exist yet
+         apiFetch<{ success: boolean; message?: string; data?: InstructorDashboardData }>('/instructor/dashboard'),
+         apiFetch<{ success: boolean; message?: string; data?: OverviewData }>('/instructor/submissions/overview').catch(() => ({ success: false, data: null }))
       ]);
       
       if (res.success && res.data) {
@@ -78,11 +78,11 @@ export default function InstructorDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-8 pb-20">
+    <div className="min-h-[calc(100vh-80px)] bg-surface pt-12 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Instructor Dashboard</h1>
+            <h1 className="text-3xl font-bold text-on-surface tracking-tight">Instructor Dashboard</h1>
             <p className="text-slate-500 mt-2">Overview of your courses, materials, and pending grading.</p>
           </div>
           <div>
@@ -93,46 +93,46 @@ export default function InstructorDashboard() {
         </div>
 
         {loading ? (
-          <div className="text-center p-12 text-slate-500 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div className="text-center p-16 text-slate-500 bg-surface-container-lowest rounded-[2rem] ring-1 ring-outline-variant/15 shadow-ambient">
             Loading dashboard data...
           </div>
         ) : error ? (
-          <div className="text-center p-8 bg-white border border-rose-200 rounded-2xl font-medium text-rose-500 shadow-sm">
+          <div className="text-center p-12 bg-surface-container-lowest ring-1 ring-error/30 rounded-[2rem] font-medium text-error shadow-ambient">
             {error}
           </div>
         ) : data && (
           <div className="space-y-8">
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Assigned Courses</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.assignedCoursesCount}</div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Assigned Courses</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.assignedCoursesCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Modules</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalModulesCount}</div>
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Total Modules</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.totalModulesCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Materials</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalMaterialsCount}</div>
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Materials</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.totalMaterialsCount}</div>
               </div>
-              <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Assignments</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{data.totalAssignmentsCount}</div>
+              <div className="bg-surface-container-lowest rounded-[1.5rem] shadow-ambient ring-1 ring-outline-variant/15 p-6">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Assignments</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-on-surface">{data.totalAssignmentsCount}</div>
               </div>
-              <div className="bg-amber-50/50 rounded-xl shadow-sm ring-1 ring-amber-200/80 p-5">
-                <span className="text-xs font-semibold text-amber-700 uppercase tracking-wider">Ungraded</span>
-                <div className="mt-2 text-3xl font-bold tracking-tight text-amber-600">{data.ungradedSubmissionsCount}</div>
+              <div className="bg-amber-50/40 rounded-[1.5rem] shadow-ambient ring-1 ring-amber-200/50 p-6">
+                <span className="text-[10px] font-semibold text-amber-700 uppercase tracking-widest">Ungraded</span>
+                <div className="mt-3 text-4xl font-extrabold tracking-tight text-amber-600">{data.ungradedSubmissionsCount}</div>
               </div>
             </div>
 
             {/* Grading Card Section */}
             {overview && (
-              <div className="bg-indigo-50/50 rounded-2xl shadow-sm ring-1 ring-indigo-200/60 p-8 flex flex-col sm:flex-row justify-between items-center">
+              <div className="bg-primary/5 rounded-[2rem] shadow-ambient ring-1 ring-primary/20 p-8 flex flex-col sm:flex-row justify-between items-center">
                 <div>
-                  <h2 className="text-2xl font-extrabold text-slate-900">Submissions & Grading</h2>
+                  <h2 className="text-2xl font-bold tracking-tight text-on-surface">Submissions & Grading</h2>
                   <p className="text-slate-500 mt-1">
-                    You have <strong className="text-indigo-600">{overview.summary.pendingGradingCount}</strong> pending items across {overview.summary.gradedAssignmentsCount} graded assignments.
+                    You have <strong className="text-primary">{overview.summary.pendingGradingCount}</strong> pending items across {overview.summary.gradedAssignmentsCount} graded assignments.
                   </p>
                 </div>
                 <div className="mt-4 sm:mt-0">
@@ -145,59 +145,59 @@ export default function InstructorDashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Recent Materials */}
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
-                  <h3 className="font-semibold text-slate-900">Recent Materials</h3>
+              <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden col-span-1">
+                <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+                  <h3 className="font-semibold text-on-surface tracking-wide">Recent Materials</h3>
                 </div>
                 {data.recentMaterials && data.recentMaterials.length > 0 ? (
-                  <ul className="divide-y divide-slate-100">
+                  <ul className="divide-y divide-outline-variant/10">
                     {data.recentMaterials.map((m) => (
-                      <li key={m._id} className="p-5 hover:bg-slate-50/50 transition-colors">
-                        <div className="font-semibold text-slate-900 text-sm">{m.title}</div>
-                        <div className="text-xs text-indigo-600 font-medium mt-0.5">{m.courseTitle}</div>
+                      <li key={m._id} className="p-6 hover:bg-surface-container-low/50 transition-colors">
+                        <div className="font-semibold text-on-surface text-sm">{m.title}</div>
+                        <div className="text-xs text-primary font-medium mt-0.5">{m.courseTitle}</div>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="p-8 text-center text-sm text-slate-400">No materials yet</div>
+                  <div className="p-10 text-center text-sm text-slate-400">No materials yet</div>
                 )}
               </div>
 
               {/* Recent Announcements */}
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
-                  <h3 className="font-semibold text-slate-900">Recent Announcements</h3>
+              <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden col-span-1">
+                <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+                  <h3 className="font-semibold text-on-surface tracking-wide">Recent Announcements</h3>
                 </div>
                 {data.recentAnnouncements && data.recentAnnouncements.length > 0 ? (
-                  <ul className="divide-y divide-slate-100">
+                  <ul className="divide-y divide-outline-variant/10">
                     {data.recentAnnouncements.map((a) => (
-                      <li key={a._id} className="p-5 hover:bg-slate-50/50 transition-colors">
-                        <div className="font-semibold text-slate-900 text-sm">{a.title}</div>
-                        <div className="text-xs text-indigo-600 font-medium mt-0.5">{a.courseTitle}</div>
+                      <li key={a._id} className="p-6 hover:bg-surface-container-low/50 transition-colors">
+                        <div className="font-semibold text-on-surface text-sm">{a.title}</div>
+                        <div className="text-xs text-primary font-medium mt-0.5">{a.courseTitle}</div>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="p-8 text-center text-sm text-slate-400">No announcements found</div>
+                  <div className="p-10 text-center text-sm text-slate-400">No announcements found</div>
                 )}
               </div>
 
               {/* Recent Assignments */}
-              <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden col-span-1">
-                <div className="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center">
-                  <h3 className="font-semibold text-slate-900">Recent Assignments</h3>
+              <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden col-span-1">
+                <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+                  <h3 className="font-semibold text-on-surface tracking-wide">Recent Assignments</h3>
                 </div>
                 {data.recentAssignments && data.recentAssignments.length > 0 ? (
-                  <ul className="divide-y divide-slate-100">
+                  <ul className="divide-y divide-outline-variant/10">
                     {data.recentAssignments.map((a) => (
-                      <li key={a._id} className="p-5 hover:bg-slate-50/50 transition-colors">
-                        <div className="font-semibold text-slate-900 text-sm">{a.title}</div>
-                        <div className="text-xs text-indigo-600 font-medium mt-0.5">{a.courseTitle}</div>
+                      <li key={a._id} className="p-6 hover:bg-surface-container-low/50 transition-colors">
+                        <div className="font-semibold text-on-surface text-sm">{a.title}</div>
+                        <div className="text-xs text-primary font-medium mt-0.5">{a.courseTitle}</div>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="p-8 text-center text-sm text-slate-400">No assignments found</div>
+                  <div className="p-10 text-center text-sm text-slate-400">No assignments found</div>
                 )}
               </div>
             </div>

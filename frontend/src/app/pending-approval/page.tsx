@@ -1,6 +1,5 @@
 'use client';
 
-import { PageHeader } from '@/components/ui/PageHeader';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Clock } from 'lucide-react';
 import { useAuth } from '@/components/auth/AuthProvider';
@@ -25,24 +24,26 @@ export default function PendingApprovalPage() {
   }, [user, isLoading, isAuthenticated, router]);
 
   if (isLoading || !user || user.status !== 'pending') {
-    return <div className="p-8 text-center text-gray-500">Loading...</div>;
+    return <div className="p-16 text-center text-slate-500">Loading your profile...</div>;
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-8 bg-slate-50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-100/50 via-slate-50/20 to-slate-50 pointer-events-none" />
-      <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl shadow-xl shadow-slate-200/40 border border-slate-200/60 text-center relative z-10">
-        <div className="mb-2">
-          <PageHeader title="Approval Needed" description="Your account is being reviewed" />
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-4 sm:p-8 bg-surface">
+      <div className="w-full max-w-md bg-surface-container-lowest p-10 sm:p-14 rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 text-center">
+        <div className="mb-4">
+          <h1 className="text-3xl font-bold tracking-tight text-on-surface mb-2">Approval Needed</h1>
+          <p className="text-sm text-slate-500">Your account is being reviewed</p>
         </div>
         
-        <EmptyState 
-          icon={Clock}
-          title="Account under review"
-          description={`Your account (${user.email}) has been created successfully as a ${user.role} but is waiting for admin approval. You will be notified via email once approved.`}
-        />
+        <div className="mt-12">
+          <EmptyState 
+            icon={Clock}
+            title="Account under review"
+            description={`Your account (${user.email}) has been created successfully as a ${user.role} but is waiting for admin approval. You will be notified via email once approved.`}
+          />
+        </div>
         
-        <p className="text-slate-500 text-sm mt-8 border-t border-slate-100 pt-6">
+        <p className="text-slate-400 text-sm mt-12 border-t border-outline-variant/15 pt-8">
           Thank you for your patience.
         </p>
       </div>

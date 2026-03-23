@@ -61,8 +61,8 @@ function AdminDashboardContent() {
       } else {
         setError(data.message || 'Failed to fetch requests');
       }
-    } catch (err: any) {
-      setError(err.message || 'Error connecting to the server');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Error connecting to the server');
     } finally {
       setLoading(false);
     }
@@ -102,24 +102,24 @@ function AdminDashboardContent() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-64px)] p-8 bg-gray-50">
-      <div className="w-full max-w-6xl">
+    <div className="flex flex-col items-center min-h-[calc(100vh-80px)] p-4 sm:p-8 bg-surface relative">
+      <div className="w-full max-w-7xl relative z-10">
         <PageHeader 
           title="Registration Requests" 
           description="Manage pending account registrations." 
         />
         
         {warningMessage && (
-          <div className="mb-6 p-4 bg-yellow-50 text-yellow-800 rounded-md border border-yellow-200">
+          <div className="mb-6 p-4 bg-amber-50/50 text-amber-800 rounded-lg border border-amber-200/50">
             {warningMessage}
           </div>
         )}
 
-        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 flex flex-col overflow-hidden">
+        <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 flex flex-col overflow-hidden">
           
-          <div className="p-6 border-b border-slate-200 bg-white flex flex-col md:flex-row md:items-end gap-5">
+          <div className="p-8 border-b border-outline-variant/10 bg-surface-container-low/30 flex flex-col md:flex-row md:items-end gap-5">
             <div className="w-full md:w-1/3">
-              <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Search</label>
+              <label className="block text-xs uppercase tracking-widest font-medium text-slate-500 mb-2">Search</label>
               <Input 
                 type="text" 
                 placeholder="Name or email..." 
@@ -129,9 +129,9 @@ function AdminDashboardContent() {
             </div>
             
             <div className="w-full md:w-1/4">
-              <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Status</label>
+              <label className="block text-xs uppercase tracking-widest font-medium text-slate-500 mb-2">Status</label>
               <select 
-                className="block w-full rounded-md border-0 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 hover:ring-slate-400 sm:text-sm sm:leading-6 transition-all bg-white"
+                className="block w-full rounded-md border-0 py-3 px-4 text-on-surface shadow-sm ring-1 ring-inset ring-outline-variant/15 outline-none transition-all duration-300 bg-surface-container-lowest focus:ring-[4px] focus:ring-primary/40 hover:ring-outline-variant/30"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
@@ -143,9 +143,9 @@ function AdminDashboardContent() {
             </div>
             
             <div className="w-full md:w-1/4">
-              <label className="block text-sm font-medium leading-6 text-slate-900 mb-1">Role</label>
+              <label className="block text-xs uppercase tracking-widest font-medium text-slate-500 mb-2">Role</label>
               <select 
-                className="block w-full rounded-md border-0 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 hover:ring-slate-400 sm:text-sm sm:leading-6 transition-all bg-white"
+                className="block w-full rounded-md border-0 py-3 px-4 text-on-surface shadow-sm ring-1 ring-inset ring-outline-variant/15 outline-none transition-all duration-300 bg-surface-container-lowest focus:ring-[4px] focus:ring-primary/40 hover:ring-outline-variant/30"
                 value={roleFilter.value}
                 onChange={(e) => setRoleFilter({ label: e.target.options[e.target.selectedIndex].text, value: e.target.value })}
               >
@@ -161,17 +161,17 @@ function AdminDashboardContent() {
           </div>
           
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50/80">
+            <table className="min-w-full divide-y divide-outline-variant/10">
+              <thead className="bg-surface/50">
                 <tr>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">User</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Role</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Signup Date</th>
-                  <th scope="col" className="px-6 py-3.5 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Actions</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">User</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Role</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Status</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Signup Date</th>
+                  <th scope="col" className="px-8 py-5 text-left text-xs font-semibold text-on-surface uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-slate-200/60 text-sm">
+              <tbody className="bg-surface-container-lowest divide-y divide-outline-variant/10 text-sm">
                 {loading ? (
                   <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-500">Loading requests...</td></tr>
                 ) : error ? (
@@ -180,15 +180,15 @@ function AdminDashboardContent() {
                   <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-500">No registration requests found matching your filters.</td></tr>
                 ) : (
                   requests.map((req) => (
-                    <tr key={req._id} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={req._id} className="hover:bg-surface-container-low/50 transition-colors">
+                      <td className="px-8 py-5 whitespace-nowrap">
                         <div className="flex flex-col">
-                          <span className="text-slate-900 font-medium">{req.name}</span>
+                          <span className="text-on-surface font-medium">{req.name}</span>
                           <span className="text-slate-500 text-xs mt-0.5">{req.email}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap capitalize text-slate-600 font-medium">{req.role}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-8 py-5 whitespace-nowrap capitalize text-slate-600 font-medium">{req.role}</td>
+                      <td className="px-8 py-5 whitespace-nowrap">
                         <span className={`inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full border
                           ${req.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 
                             req.status === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-200' : 
@@ -196,10 +196,10 @@ function AdminDashboardContent() {
                           {req.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-500">
+                      <td className="px-8 py-5 whitespace-nowrap text-slate-500">
                         {new Date(req.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
+                      <td className="px-8 py-5 whitespace-nowrap text-sm font-medium space-x-3">
                         {req.status === 'pending' && (
                           <div className="flex gap-2">
                             <Button variant="primary" onClick={() => handleAction(req._id, 'approve')} className="!py-1.5 !px-3 text-xs">Approve</Button>

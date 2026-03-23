@@ -57,9 +57,9 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
     setError(null);
     try {
       const [courseRes, modulesRes, anntsRes] = await Promise.all([
-        apiFetch<any>(`/instructor/courses/${id}`),
-        apiFetch<any>(`/instructor/courses/${id}/modules`),
-        apiFetch<any>(`/instructor/courses/${id}/announcements`)
+        apiFetch<any>(`/instructor/courses/${id}`), // eslint-disable-line @typescript-eslint/no-explicit-any
+        apiFetch<any>(`/instructor/courses/${id}/modules`), // eslint-disable-line @typescript-eslint/no-explicit-any
+        apiFetch<any>(`/instructor/courses/${id}/announcements`) // eslint-disable-line @typescript-eslint/no-explicit-any
       ]);
 
       if (!courseRes.success) throw new Error(courseRes.message || 'Failed to load course');
@@ -79,7 +79,7 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
     e.preventDefault();
     if (!newModuleName.trim()) return;
     try {
-      const res = await apiFetch<any>(`/instructor/courses/${id}/modules`, {
+      const res = await apiFetch<any>(`/instructor/courses/${id}/modules`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'POST',
         body: JSON.stringify({ title: newModuleName, description: newModuleDesc })
       });
@@ -88,12 +88,12 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
         setNewModuleDesc('');
         fetchData();
       } else alert(res.message);
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) { alert((err as Error).message); }
   };
 
   const handleEditModule = async (moduleId: string, title: string, description: string) => {
     try {
-      const res = await apiFetch<any>(`/instructor/modules/${moduleId}`, {
+      const res = await apiFetch<any>(`/instructor/modules/${moduleId}`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'PATCH',
         body: JSON.stringify({ title, description })
       });
@@ -101,16 +101,16 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
         setEditModuleId(null);
         fetchData();
       } else alert(res.message);
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) { alert((err as Error).message); }
   };
 
   const handleDeleteModule = async (moduleId: string) => {
     if (!confirm('Delete this module and all its materials?')) return;
     try {
-      const res = await apiFetch<any>(`/instructor/modules/${moduleId}`, { method: 'DELETE' });
+      const res = await apiFetch<any>(`/instructor/modules/${moduleId}`, { method: 'DELETE' }); // eslint-disable-line @typescript-eslint/no-explicit-any
       if (res.success) fetchData();
       else alert(res.message);
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) { alert((err as Error).message); }
   };
 
   // --- MATERIAL ACTIONS ---
@@ -142,16 +142,16 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
       } else {
         alert(data.message || 'Upload failed');
       }
-    } catch (err: any) { alert(typeof err === 'string' ? err : err.message || 'Upload failed'); }
+    } catch (err: unknown) { alert(typeof err === 'string' ? err : (err as Error).message || 'Upload failed'); }
   };
 
   const handleDeleteMaterial = async (materialId: string) => {
       if (!confirm('Delete this material?')) return;
       try {
-        const res = await apiFetch<any>(`/instructor/materials/${materialId}`, { method: 'DELETE' });
+        const res = await apiFetch<any>(`/instructor/materials/${materialId}`, { method: 'DELETE' }); // eslint-disable-line @typescript-eslint/no-explicit-any
         if (res.success) fetchData();
         else alert(res.message);
-      } catch (err: any) { alert(err.message); }
+      } catch (err: unknown) { alert((err as Error).message); }
   };
 
   // --- ANNOUNCEMENT ACTIONS ---
@@ -159,7 +159,7 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
     e.preventDefault();
     if (!newAnnTitle.trim() || !newAnnMessage.trim()) return;
     try {
-      const res = await apiFetch<any>(`/instructor/courses/${id}/announcements`, {
+      const res = await apiFetch<any>(`/instructor/courses/${id}/announcements`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'POST',
         body: JSON.stringify({ title: newAnnTitle, message: newAnnMessage })
       });
@@ -168,12 +168,12 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
         setNewAnnMessage('');
         fetchData();
       } else alert(res.message);
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) { alert((err as Error).message); }
   };
 
   const handleEditAnn = async (annId: string, title: string, message: string) => {
     try {
-      const res = await apiFetch<any>(`/instructor/announcements/${annId}`, {
+      const res = await apiFetch<any>(`/instructor/announcements/${annId}`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'PATCH',
         body: JSON.stringify({ title, message })
       });
@@ -181,42 +181,42 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
         setEditAnnId(null);
         fetchData();
       } else alert(res.message);
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) { alert((err as Error).message); }
   };
 
   const handleDeleteAnn = async (annId: string) => {
     if (!confirm('Delete this announcement?')) return;
     try {
-      const res = await apiFetch<any>(`/instructor/announcements/${annId}`, { method: 'DELETE' });
+      const res = await apiFetch<any>(`/instructor/announcements/${annId}`, { method: 'DELETE' }); // eslint-disable-line @typescript-eslint/no-explicit-any
       if (res.success) fetchData();
       else alert(res.message);
-    } catch (err: any) { alert(err.message); }
+    } catch (err: unknown) { alert((err as Error).message); }
   };
 
 
   if (authLoading || !user || user.role !== 'instructor') return <div className="p-8 text-center text-slate-500">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
+    <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href="/instructor/courses" className="text-sm font-medium text-indigo-600 hover:text-indigo-700 mb-6 inline-block">
+        <Link href="/instructor/courses" className="text-sm font-medium text-primary hover:text-primary/80 mb-6 inline-block">
           &larr; Back to My Courses
         </Link>
         
         {loading ? (
-          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">Loading course...</div>
+          <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">Loading course...</div>
         ) : error || !course ? (
-          <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">{error || 'Course not found'}</div>
+          <div className="p-12 text-center text-error font-medium bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-error/30 mt-6">{error || 'Course not found'}</div>
         ) : (
           <div className="space-y-8">
             {/* Header */}
-            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-8 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 p-10 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 font-mono mb-4 ring-1 ring-inset ring-indigo-700/10">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary font-mono mb-4 ring-1 ring-inset ring-primary/20">
                   {course.code}
                 </span>
-                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-4">{course.title}</h1>
-                <p className="text-lg text-slate-600 max-w-3xl">{course.description}</p>
+                <h1 className="text-4xl font-extrabold text-on-surface tracking-tight mb-4">{course.title}</h1>
+                <p className="text-lg text-slate-500 max-w-3xl leading-relaxed">{course.description}</p>
               </div>
               
               <Link href={`/instructor/courses/${course._id}/assignments`}>
@@ -230,116 +230,114 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
               {/* Left Column: Modules & Materials */}
               <div className="lg:col-span-2 space-y-8">
                 <div className="flex items-center justify-between">
-                   <h2 className="text-2xl font-bold text-slate-900">Course Content (Modules)</h2>
+                   <h2 className="text-2xl font-bold tracking-tight text-on-surface">Course Content (Modules)</h2>
                 </div>
 
                 {/* Create Module Form */}
-                <form onSubmit={handleCreateModule} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+                <form onSubmit={handleCreateModule} className="bg-surface-container-lowest p-8 rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 flex flex-col sm:flex-row gap-5 items-start sm:items-end">
                    <div className="w-full">
-                     <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">New Module Title</label>
+                     <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">New Module Title</label>
                      <Input required value={newModuleName} onChange={e => setNewModuleName(e.target.value)} placeholder="e.g. Week 1: Introduction" />
                    </div>
                    <div className="w-full">
-                     <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Description (Optional)</label>
+                     <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Description (Optional)</label>
                      <Input value={newModuleDesc} onChange={e => setNewModuleDesc(e.target.value)} placeholder="Overview of topics..." />
                    </div>
-                   <Button variant="primary" type="submit" className="whitespace-nowrap pb-2.5">Add Module</Button>
+                   <Button variant="primary" type="submit" className="whitespace-nowrap px-8">Add Module</Button>
                 </form>
 
                 {/* Modules List */}
                 {modules.length === 0 ? (
-                  <div className="bg-white p-12 text-center border border-slate-200 rounded-xl shadow-sm text-slate-500 italic">No modules created yet.</div>
+                  <div className="bg-surface-container-lowest p-16 text-center shadow-ambient ring-1 ring-outline-variant/15 rounded-[2rem] text-slate-500 italic">No modules created yet.</div>
                 ) : (
                   <div className="space-y-6">
                     {modules.map((mod) => (
-                      <div key={mod._id} className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 overflow-hidden">
+                      <div key={mod._id} className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden">
                         {editModuleId === mod._id ? (
-                           <div className="p-6 bg-slate-50 border-b border-slate-200">
-                             <h3 className="text-sm font-semibold mb-3 text-slate-700">Edit Module</h3>
+                           <div className="p-8 bg-surface-container-low/30 border-b border-outline-variant/10">
+                             <h3 className="text-sm font-semibold mb-4 text-on-surface">Edit Module</h3>
                              <div className="space-y-4">
                                <Input defaultValue={mod.title} id={`edit-mod-title-${mod._id}`} />
                                <Input defaultValue={mod.description} id={`edit-mod-desc-${mod._id}`} />
-                               <div className="flex gap-2">
+                               <div className="flex gap-3 mt-4">
                                  <Button variant="primary" onClick={() => {
                                     const t = (document.getElementById(`edit-mod-title-${mod._id}`) as HTMLInputElement).value;
                                     const d = (document.getElementById(`edit-mod-desc-${mod._id}`) as HTMLInputElement).value;
                                     handleEditModule(mod._id, t, d);
-                                 }}>Save</Button>
+                                 }}>Save Changes</Button>
                                  <Button variant="secondary" onClick={() => setEditModuleId(null)}>Cancel</Button>
                                </div>
                              </div>
                            </div>
                         ) : (
-                           <div className="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-start group">
+                           <div className="p-8 bg-surface-container-low/30 border-b border-outline-variant/10 flex justify-between items-start group">
                              <div>
-                                <h3 className="text-base font-semibold text-slate-900 flex items-center gap-3">
-                                  <span className="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 ring-1 ring-inset ring-indigo-700/10 flex items-center justify-center text-xs font-bold">{mod.order}</span>
+                                <h3 className="text-xl font-bold text-on-surface flex items-center gap-4">
+                                  <span className="w-8 h-8 rounded-full bg-primary/10 text-primary ring-1 ring-inset ring-primary/20 flex items-center justify-center text-sm font-bold">{mod.order}</span>
                                   {mod.title}
                                 </h3>
-                                {mod.description && <p className="text-slate-600 mt-2 text-sm ml-9">{mod.description}</p>}
+                                {mod.description && <p className="text-slate-500 mt-2 text-base ml-12 leading-relaxed">{mod.description}</p>}
                              </div>
                              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Button variant="secondary" className="!px-3 !py-1 text-xs" onClick={() => setEditModuleId(mod._id)}>Edit</Button>
-                                <Button variant="danger" className="!px-3 !py-1 text-xs !bg-rose-100 !text-rose-700 hover:!bg-rose-200" onClick={() => handleDeleteModule(mod._id)}>Delete</Button>
+                                <Button variant="secondary" className="!px-4 !py-1.5 text-xs" onClick={() => setEditModuleId(mod._id)}>Edit</Button>
+                                <Button variant="danger" className="!px-4 !py-1.5 text-xs" onClick={() => handleDeleteModule(mod._id)}>Delete</Button>
                              </div>
                            </div>
                         )}
                         
                         {/* Materials Section inside Module */}
-                        <div className="p-6">
-                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 ml-9">Learning Materials</h4>
+                        <div className="p-8">
+                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-6 ml-12">Learning Materials</h4>
                           
                           {mod.materials?.length > 0 ? (
-                            <ul className="ml-9 mb-6 space-y-3">
+                            <ul className="ml-12 mb-8 space-y-4">
                               {mod.materials.map(mat => (
-                                <li key={mat._id} className="flex justify-between items-start p-4 rounded-lg border border-slate-100 bg-white hover:border-slate-300 transition-colors group">
-                                  <div className="flex gap-3">
+                                <li key={mat._id} className="flex justify-between items-start p-5 rounded-2xl ring-1 ring-outline-variant/15 bg-surface-container-lowest hover:ring-outline-variant/30 hover:shadow-sm transition-all duration-300 group">
+                                  <div className="flex gap-4">
                                     <div className="mt-1">
-                                      <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                      <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                     </div>
                                     <div>
-                                      <a href={mat.fileUrl.startsWith('http') ? mat.fileUrl : `${process.env.NEXT_PUBLIC_API_URL}${mat.fileUrl}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-indigo-600 hover:underline">{mat.title}</a>
-                                      {mat.description && <p className="text-sm text-slate-500 mt-0.5">{mat.description}</p>}
-                                      <p className="text-xs text-slate-400 mt-1">{mat.fileName} • Uploaded {new Date(mat.createdAt).toLocaleDateString()}</p>
+                                      <a href={mat.fileUrl.startsWith('http') ? mat.fileUrl : `${process.env.NEXT_PUBLIC_API_URL}${mat.fileUrl}`} target="_blank" rel="noopener noreferrer" className="text-base font-bold text-primary hover:underline">{mat.title}</a>
+                                      {mat.description && <p className="text-sm text-slate-500 mt-1 leading-relaxed">{mat.description}</p>}
+                                      <p className="text-xs text-slate-400 mt-2 font-medium">{mat.fileName} • Uploaded {new Date(mat.createdAt).toLocaleDateString()}</p>
                                     </div>
                                   </div>
-                                  <button onClick={() => handleDeleteMaterial(mat._id)} className="text-slate-400 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity p-2">
+                                  <button onClick={() => handleDeleteMaterial(mat._id)} className="text-slate-400 hover:text-error opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-surface-container-low rounded-xl">
                                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                   </button>
                                 </li>
                               ))}
                             </ul>
                           ) : (
-                            <p className="text-sm text-slate-500 italic ml-9 mb-6">No materials uploaded yet.</p>
+                            <p className="text-sm text-slate-500 italic ml-12 mb-8">No materials uploaded yet.</p>
                           )}
 
                           {/* Upload Material Form */}
-                          <form onSubmit={(e) => handleUploadMaterial(mod._id, e)} className="ml-9 p-4 bg-slate-50 rounded-lg border border-slate-200 border-dashed">
-                             <h4 className="text-xs font-semibold text-slate-700 mb-3">Upload Material</h4>
-                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                          <form onSubmit={(e) => handleUploadMaterial(mod._id, e)} className="ml-12 p-6 bg-surface-container-low/50 rounded-2xl ring-1 ring-outline-variant/20 border-dashed border">
+                             <h4 className="text-sm font-bold text-on-surface mb-4">Upload Material</h4>
+                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                                <Input 
                                   placeholder="Document Title *" required 
                                   value={uploadState[mod._id]?.title || ''}
                                   onChange={e => setUploadState({...uploadState, [mod._id]: {...uploadState[mod._id], title: e.target.value}})}
-                                  className="!py-1.5 !text-sm"
                                />
                                <Input 
                                   placeholder="Short Description (Optional)" 
                                   value={uploadState[mod._id]?.desc || ''}
                                   onChange={e => setUploadState({...uploadState, [mod._id]: {...uploadState[mod._id], desc: e.target.value}})}
-                                  className="!py-1.5 !text-sm"
                                />
                              </div>
-                             <div className="flex items-center gap-3">
+                             <div className="flex items-center gap-4">
                                <input 
                                   type="file" id={`file-${mod._id}`} required
-                                  className="block w-full text-sm text-slate-500 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                                  className="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors"
                                   accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip,.png,.jpg,.jpeg"
                                   onChange={e => setUploadState({...uploadState, [mod._id]: {...uploadState[mod._id], file: e.target.files?.[0] || null}})}
                                />
-                               <Button variant="primary" type="submit" className="!py-1.5 !px-4 text-sm whitespace-nowrap">Upload</Button>
+                               <Button variant="primary" type="submit" className="px-8 whitespace-nowrap">Upload</Button>
                              </div>
-                             <p className="text-[10px] text-slate-400 mt-2">Max 10MB. Allowed: pdf, doc, docx, ppt, pptx, txt, zip, png, jpg, jpeg</p>
+                             <p className="text-xs text-slate-400 mt-4">Max 10MB. Allowed: pdf, doc, docx, ppt, pptx, txt, zip, png, jpg, jpeg</p>
                           </form>
                         </div>
                       </div>
@@ -350,58 +348,58 @@ export default function InstructorCourseDetailPage({ params }: { params: Promise
 
               {/* Right Column: Announcements */}
               <div className="space-y-6">
-                 <h2 className="text-2xl font-bold text-slate-900">Announcements</h2>
+                 <h2 className="text-2xl font-bold tracking-tight text-on-surface">Announcements</h2>
                  
                  {/* Create Announcement */}
-                 <form onSubmit={handleCreateAnnouncement} className="bg-white p-5 rounded-xl shadow-sm ring-1 ring-slate-200 flex flex-col gap-4">
-                    <h3 className="text-sm font-semibold text-slate-700">Post New Announcement</h3>
+                 <form onSubmit={handleCreateAnnouncement} className="bg-surface-container-lowest p-8 rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 flex flex-col gap-5">
+                    <h3 className="text-base font-bold text-on-surface">Post New Announcement</h3>
                     <Input required placeholder="Announcement Title" value={newAnnTitle} onChange={e => setNewAnnTitle(e.target.value)} />
                     <textarea 
-                       required placeholder="Write your message here..." rows={4}
-                       className="w-full px-4 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                       required placeholder="Write your message here..." rows={5}
+                       className="w-full px-4 py-3 text-base bg-surface-container-lowest shadow-sm ring-1 ring-inset ring-outline-variant/15 outline-none transition-all duration-300 focus:ring-[4px] focus:ring-primary/40 hover:ring-outline-variant/30 rounded-xl"
                        value={newAnnMessage} onChange={e => setNewAnnMessage(e.target.value)}
                     />
-                    <Button variant="primary" type="submit">Post Announcement</Button>
+                    <Button variant="primary" type="submit" className="w-full justify-center">Post Announcement</Button>
                  </form>
 
                  {/* Announcements List */}
                  {announcements.length === 0 ? (
-                    <div className="bg-white p-8 text-center border border-slate-200 rounded-xl shadow-sm text-slate-500 italic">No announcements posted yet.</div>
+                    <div className="bg-surface-container-lowest p-10 text-center shadow-ambient ring-1 ring-outline-variant/15 rounded-[2rem] text-slate-500 italic">No announcements posted yet.</div>
                  ) : (
                     <div className="space-y-4">
                       {announcements.map((ann) => (
-                         <div key={ann._id} className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative group">
+                         <div key={ann._id} className="bg-surface-container-lowest p-8 rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 relative group">
                             {editAnnId === ann._id ? (
-                               <div className="space-y-3">
+                               <div className="space-y-4">
                                  <Input defaultValue={ann.title} id={`edit-ann-title-${ann._id}`} />
                                  <textarea 
-                                    defaultValue={ann.message} id={`edit-ann-msg-${ann._id}`} rows={3}
-                                    className="w-full px-4 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                                    defaultValue={ann.message} id={`edit-ann-msg-${ann._id}`} rows={4}
+                                    className="w-full px-4 py-3 text-base bg-surface-container-lowest shadow-sm ring-1 ring-inset ring-outline-variant/15 outline-none transition-all duration-300 focus:ring-[4px] focus:ring-primary/40 hover:ring-outline-variant/30 rounded-xl"
                                  />
-                                 <div className="flex gap-2">
-                                    <Button variant="primary" className="!py-1 text-sm" onClick={() => {
+                                 <div className="flex gap-3">
+                                    <Button variant="primary" className="!py-2" onClick={() => {
                                        const t = (document.getElementById(`edit-ann-title-${ann._id}`) as HTMLInputElement).value;
                                        const m = (document.getElementById(`edit-ann-msg-${ann._id}`) as HTMLInputElement).value;
                                        handleEditAnn(ann._id, t, m);
-                                    }}>Save</Button>
-                                    <Button variant="secondary" className="!py-1 text-sm" onClick={() => setEditAnnId(null)}>Cancel</Button>
+                                    }}>Save Changes</Button>
+                                    <Button variant="secondary" className="!py-2" onClick={() => setEditAnnId(null)}>Cancel</Button>
                                  </div>
                                </div>
                             ) : (
                                <>
-                                 <div className="absolute top-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onClick={() => setEditAnnId(ann._id)} className="p-1.5 text-slate-400 hover:text-indigo-600 rounded bg-slate-50 hover:bg-indigo-50 transition-colors">
+                                 <div className="absolute top-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onClick={() => setEditAnnId(ann._id)} className="p-2 text-slate-400 hover:text-primary rounded-xl bg-surface-container-low hover:bg-primary/10 transition-colors">
                                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                     </button>
-                                    <button onClick={() => handleDeleteAnn(ann._id)} className="p-1.5 text-slate-400 hover:text-rose-600 rounded bg-slate-50 hover:bg-rose-50 transition-colors">
+                                    <button onClick={() => handleDeleteAnn(ann._id)} className="p-2 text-slate-400 hover:text-error rounded-xl bg-surface-container-low hover:bg-error/10 transition-colors">
                                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                     </button>
                                  </div>
-                                 <h4 className="font-bold text-slate-900 pr-16">{ann.title}</h4>
-                                 <p className="text-xs text-slate-400 mb-3 mt-1">
+                                 <h4 className="text-lg font-bold text-on-surface pr-16">{ann.title}</h4>
+                                 <p className="text-xs text-primary font-medium mb-4 mt-2">
                                     {new Date(ann.createdAt).toLocaleDateString()} {ann.updatedAt !== ann.createdAt && '(Edited)'}
                                  </p>
-                                 <p className="text-sm text-slate-600 whitespace-pre-wrap">{ann.message}</p>
+                                 <p className="text-base text-slate-600 leading-relaxed whitespace-pre-wrap">{ann.message}</p>
                                </>
                             )}
                          </div>

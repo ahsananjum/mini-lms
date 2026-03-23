@@ -38,7 +38,7 @@ export default function NewCoursePage() {
     setSubmitting(true);
     setError(null);
     try {
-      const response: any = await apiFetch('/admin/courses', {
+      const response = await apiFetch<{ success: boolean; message?: string }>('/admin/courses', {
         method: 'POST',
         body: JSON.stringify({ title, code, description }),
       });
@@ -48,8 +48,8 @@ export default function NewCoursePage() {
       }
 
       router.push('/admin/courses');
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while creating the course');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'An error occurred while creating the course');
       setSubmitting(false);
     }
   };

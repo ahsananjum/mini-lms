@@ -34,8 +34,8 @@ export function LoginForm() {
       } else {
         setGlobalError(response.message || 'Login failed.');
       }
-    } catch (error: any) {
-      setGlobalError(error.message || 'An unexpected error occurred.');
+    } catch (error: unknown) {
+      setGlobalError((error as Error).message || 'An unexpected error occurred.');
     }
   };
 

@@ -35,8 +35,8 @@ export function SignupForm() {
       } else {
         setGlobalError(response.message || 'Signup failed.');
       }
-    } catch (error: any) {
-      setGlobalError(error.message || 'An unexpected error occurred.');
+    } catch (error: unknown) {
+      setGlobalError((error as Error).message || 'An unexpected error occurred.');
     }
   };
 

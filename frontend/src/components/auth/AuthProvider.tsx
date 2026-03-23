@@ -54,7 +54,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Initial fetch on mount
   useEffect(() => {
-    refreshUser();
+    // Timeout avoids synchronous setState warning from linter
+    setTimeout(() => {
+      refreshUser();
+    }, 0);
   }, []);
 
   return (

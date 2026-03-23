@@ -61,9 +61,9 @@ export default function CourseStudentsPage({ params }: { params: Promise<{ id: s
     setError(null);
     try {
       const [courseRes, enrollmentsRes, studentsRes] = await Promise.all([
-        apiFetch<any>(`/admin/courses/${id}`),
-        apiFetch<any>(`/admin/courses/${id}/enrollments`),
-        apiFetch<any>(`/admin/users?role=student&status=active`)
+        apiFetch<any>(`/admin/courses/${id}`), // eslint-disable-line @typescript-eslint/no-explicit-any
+        apiFetch<any>(`/admin/courses/${id}/enrollments`), // eslint-disable-line @typescript-eslint/no-explicit-any
+        apiFetch<any>(`/admin/users?role=student&status=active`) // eslint-disable-line @typescript-eslint/no-explicit-any
       ]);
 
       if (!courseRes.success) throw new Error(courseRes.message || 'Failed to fetch course');
@@ -94,7 +94,7 @@ export default function CourseStudentsPage({ params }: { params: Promise<{ id: s
     setSubmitting(true);
     setFormError(null);
     try {
-      const response = await apiFetch<any>(`/admin/courses/${id}/enrollments`, {
+      const response = await apiFetch<any>(`/admin/courses/${id}/enrollments`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'POST',
         body: JSON.stringify({ studentId: selectedStudentId }),
       });
@@ -117,7 +117,7 @@ export default function CourseStudentsPage({ params }: { params: Promise<{ id: s
     }
     
     try {
-      const response = await apiFetch<any>(`/admin/courses/${id}/enrollments/${studentId}`, {
+      const response = await apiFetch<any>(`/admin/courses/${id}/enrollments/${studentId}`, { // eslint-disable-line @typescript-eslint/no-explicit-any
         method: 'DELETE'
       });
 

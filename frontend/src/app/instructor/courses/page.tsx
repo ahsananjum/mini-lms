@@ -41,14 +41,14 @@ export default function InstructorCoursesPage() {
   const fetchCourses = async () => {
     setLoading(true);
     try {
-      const response: any = await apiFetch('/instructor/courses');
+      const response = await apiFetch<{ success: boolean; message?: string; data?: { courses: Course[] } }>('/instructor/courses');
       if (response.success) {
         setCourses(response.data?.courses || []);
       } else {
         setError(response.message || 'Failed to fetch your courses');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to fetch your courses');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Failed to fetch your courses');
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export default function InstructorCoursesPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-64px)] p-4 sm:p-8 bg-slate-50">
+    <div className="flex flex-col min-h-[calc(100vh-80px)] p-4 sm:p-8 bg-surface">
       <div className="max-w-7xl mx-auto w-full">
         <PageHeader 
           title="My Courses" 
@@ -67,33 +67,33 @@ export default function InstructorCoursesPage() {
         />
         
         {loading ? (
-           <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">Loading courses...</div>
+           <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">Loading courses...</div>
         ) : error ? (
-           <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">{error}</div>
+           <div className="p-12 text-center text-error font-medium bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-error/30 mt-6">{error}</div>
         ) : courses.length === 0 ? (
-           <div className="p-16 text-center bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 mt-6">
-               <div className="w-16 h-16 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+           <div className="p-20 text-center bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">
+               <div className="w-16 h-16 mx-auto bg-surface-container-low rounded-[1.25rem] ring-1 ring-outline-variant/10 flex items-center justify-center mb-6">
+                  <svg className="w-8 h-8 text-slate-400 strokeWidth-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                </div>
-               <h3 className="text-lg font-semibold text-slate-900 mb-2">No courses assigned yet.</h3>
-               <p className="text-slate-500 mb-6">You will see your courses here once an administrator assigns them to you.</p>
+               <h3 className="text-2xl font-bold tracking-tight text-on-surface mb-3">No courses assigned yet.</h3>
+               <p className="text-base text-slate-500 mb-6 max-w-md mx-auto leading-relaxed">You will see your courses here once an administrator assigns them to you.</p>
            </div>
         ) : (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
              {courses.map((course) => (
-                <div key={course._id} className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
-                   <div className="p-6 flex-1">
+                <div key={course._id} className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden flex flex-col hover:shadow-lg hover:ring-outline-variant/30 transition-all duration-300">
+                   <div className="p-8 flex-1">
                       <div className="flex items-center justify-between mb-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 font-mono ring-1 ring-inset ring-indigo-700/10">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary font-mono ring-1 ring-inset ring-primary/20">
                            {course.code}
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2">{course.title}</h3>
-                      <p className="text-slate-500 text-sm line-clamp-3 mb-6">{course.description}</p>
+                      <h3 className="text-xl font-bold text-on-surface mb-3 line-clamp-2">{course.title}</h3>
+                      <p className="text-slate-500 text-sm line-clamp-3 mb-6 leading-relaxed">{course.description}</p>
                    </div>
-                   <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 mt-auto">
+                   <div className="px-8 py-5 bg-surface-container-low/30 border-t border-outline-variant/10 mt-auto">
                       <Link href={`/instructor/courses/${course._id}`} className="block w-full">
                          <Button variant="primary" className="w-full justify-center">
                             Manage Course
