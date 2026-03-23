@@ -3,7 +3,6 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
-import { PageHeader } from '@/components/ui/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { apiFetch } from '@/lib/api';
 import { ROUTES } from '@/lib/constants';
@@ -136,27 +135,32 @@ export default function CourseStudentsPage({ params }: { params: Promise<{ id: s
   }
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-64px)] p-4 sm:p-8 bg-slate-50 relative">
-      <div className="w-full max-w-5xl relative z-10">
-        <div className="mb-6">
-          <Link href="/admin/courses" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-            &larr; Back to Courses
-          </Link>
+    <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+            <Link href="/admin" className="hover:text-white transition-colors">Admin</Link>
+            <span>/</span>
+            <Link href="/admin/courses" className="hover:text-white transition-colors">Courses</Link>
+            <span>/</span>
+            <span className="text-white">Roster</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+            {course ? `Roster: ${course.code}` : 'Manage Students'}
+          </h1>
+          <p className="text-xl text-indigo-200/80 mt-2 font-medium">
+            {course ? course.title : 'Enroll or remove students from this course.'}
+          </p>
         </div>
-        
-        {course ? (
-            <PageHeader 
-              title={`Manage Students - ${course.code}`} 
-              description={course.title} 
-            />
-        ) : (
-            <PageHeader 
-              title="Manage Students" 
-              description="Enroll or remove students from this course." 
-            />
-        )}
-        
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 mt-6 overflow-hidden">
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20">
+        <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 flex flex-col overflow-hidden">
           {loading ? (
              <div className="p-12 text-center text-slate-500">Loading data...</div>
           ) : error && !course ? (

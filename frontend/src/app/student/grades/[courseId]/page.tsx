@@ -75,10 +75,33 @@ export default function StudentCourseGradesPage({ params }: { params: Promise<{ 
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href="/student/grades" className="text-sm font-medium text-primary hover:text-primary/80 mb-6 inline-block">
-          &larr; Back to Enrolled Courses
-        </Link>
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+             <Link href={`/student/grades`} className="hover:text-white transition-colors">Grades</Link>
+             <span>/</span>
+             <span className="text-white">Course Grades</span>
+          </div>
+          
+          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+            <div>
+               <div className="flex items-center gap-3 mb-3">
+                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/20 text-indigo-200 ring-1 ring-inset ring-primary/40">
+                   {grades.length} Graded Assignments
+                 </span>
+               </div>
+               <h1 className="text-4xl font-extrabold text-white tracking-tight">{courseTitle}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
         
         {loading ? (
           <div className="text-center p-16 text-slate-500 bg-surface-container-lowest rounded-[2rem] ring-1 ring-outline-variant/15 shadow-ambient mt-6">
@@ -90,10 +113,6 @@ export default function StudentCourseGradesPage({ params }: { params: Promise<{ 
           </div>
         ) : (
           <div className="space-y-8">
-            <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 p-10">
-               <h1 className="text-4xl font-extrabold text-on-surface tracking-tight">{courseTitle}</h1>
-               <p className="text-slate-500 mt-3 text-lg font-medium">Graded Assignments</p>
-            </div>
 
             {grades.length === 0 ? (
                <div className="text-center p-20 bg-surface-container-lowest ring-1 ring-outline-variant/15 rounded-[2rem] shadow-ambient flex flex-col items-center">

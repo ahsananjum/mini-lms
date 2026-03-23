@@ -60,24 +60,40 @@ export default function StudentDashboard() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-surface pt-8 pb-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-on-surface tracking-tight">
-              Welcome back, {user.email}
-            </h1>
-            <p className="text-slate-500 mt-2">Here is your current progress and recent updates.</p>
-          </div>
-          <div className="flex gap-3 w-full sm:w-auto">
-             <Link href="/student/courses" className="flex-1 sm:flex-none">
-               <Button variant="secondary" className="w-full shadow-sm text-sm px-6 py-2.5">My Courses</Button>
-             </Link>
-             <Link href="/student/grades" className="flex-1 sm:flex-none">
-               <Button variant="primary" className="w-full shadow-sm text-sm px-6 py-2.5">View Grades</Button>
-             </Link>
+    <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Welcome back, Student
+              </h1>
+              <p className="text-xl text-indigo-200/80 mt-3 font-medium max-w-3xl leading-relaxed">
+                Here is your current progress and recent updates.
+              </p>
+            </div>
+            <div className="flex gap-4 w-full sm:w-auto mt-4 lg:mt-0">
+               <Link href="/student/courses" className="flex-1 sm:flex-none">
+                 <Button variant="secondary" className="w-full shadow-sm border-transparent bg-white/10 text-white hover:bg-white/20 whitespace-nowrap px-8 h-[48px]">
+                   My Courses
+                 </Button>
+               </Link>
+               <Link href="/student/grades" className="flex-1 sm:flex-none">
+                 <Button variant="primary" className="w-full shadow-sm whitespace-nowrap px-8 h-[48px]">
+                   View Grades
+                 </Button>
+               </Link>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
 
         {loading ? (
           <div className="text-center p-16 text-slate-500 bg-surface-container-lowest rounded-[2rem] ring-1 ring-outline-variant/15 shadow-ambient">

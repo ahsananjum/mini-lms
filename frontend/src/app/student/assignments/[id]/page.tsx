@@ -118,13 +118,73 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        
-        {data?.assignment?.course && (
-          <Link href={`/student/courses/${data.assignment.course._id}`} className="text-sm font-medium text-primary hover:text-primary/80 mb-6 inline-block">
-            &larr; Back to {data.assignment.course.code}
-          </Link>
-        )}
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+             {data?.assignment?.course && (
+               <>
+                 <Link href={`/student/courses/${data.assignment.course?._id}`} className="hover:text-white transition-colors">{data.assignment.course?.code}</Link>
+                 <span>/</span>
+               </>
+             )}
+             <span className="text-white">Assignment</span>
+          </div>
+          
+          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${data?.assignment?.gradingType === 'graded' ? 'bg-primary/20 text-indigo-200 ring-1 ring-inset ring-primary/40' : 'bg-white/10 text-slate-300 ring-1 ring-inset ring-white/20'}`}>
+                   {data?.assignment?.gradingType === 'graded' ? 'Graded' : 'Ungraded'}
+                 </span>
+                 {data?.assignment?.dueDate && (
+                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-200 ring-1 ring-inset ring-amber-500/40">
+                     Due: {new Date(data.assignment.dueDate).toLocaleString()}
+                   </span>
+                 )}
+                 {data?.assignment?.gradingType === 'graded' && data?.assignment?.totalMarks && (
+                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-200 ring-1 ring-inset ring-emerald-500/40">
+                     {data.assignment.totalMarks} Marks
+                   </span>
+                 )}
+               </div>
+               <h1 className="text-4xl font-extrabold text-white tracking-tight">
+                 {data?.assignment ? data.assignment.title : 'Assignment Details'}
+               </h1>
+            </div>
+            
+            {/* Status Badge in Dark Pattern */}
+            <div className="shrink-0 bg-white/5 backdrop-blur-md p-6 rounded-[1.5rem] ring-1 ring-white/20 min-w-[220px] shadow-sm">
+               <h3 className="text-[10px] font-bold text-indigo-200/60 uppercase tracking-widest mb-3">Submission Status</h3>
+               {(!data?.submission || data?.submission.status === 'not_submitted') && (
+                 <div className="inline-flex items-center gap-3 text-sm font-bold text-amber-500 bg-amber-500/10 px-4 py-2 rounded-xl ring-1 ring-amber-500/50 shadow-sm w-full">
+                   <div className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse ring-4 ring-amber-500/20"></div>
+                   Not Submitted
+                 </div>
+               )}
+               {data?.submission?.status === 'submitted' && (
+                 <div className="inline-flex items-center gap-3 text-sm font-bold text-indigo-200 bg-primary/20 px-4 py-2 rounded-xl ring-1 ring-primary/40 shadow-sm w-full">
+                   <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                   Submitted
+                 </div>
+               )}
+               {data?.submission?.status === 'graded' && (
+                 <div className="inline-flex items-center gap-3 text-sm font-bold text-emerald-300 bg-emerald-500/20 px-4 py-2 rounded-xl ring-1 ring-emerald-500/40 shadow-sm w-full">
+                   <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                   Graded
+                 </div>
+               )}
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
 
         {loading ? (
           <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">
@@ -136,59 +196,15 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
           </div>
         ) : (
           <div className="space-y-8">
-            
-            <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 p-10">
-              <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
-                 <div>
-                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase mb-4 tracking-widest ring-1 ring-inset ${data.assignment.gradingType === 'graded' ? 'bg-emerald-50 text-emerald-700 ring-emerald-600/20' : 'bg-surface-container-low text-slate-700 ring-outline-variant/15'}`}>
-                     {data.assignment.gradingType === 'graded' ? 'GRADED ASSIGNMENT' : 'UNGRADED ASSIGNMENT'}
-                   </span>
-                   <h1 className="text-4xl font-extrabold text-on-surface tracking-tight mb-4">{data.assignment.title}</h1>
-                   <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 font-medium">
-                     <div className="bg-surface-container-low px-4 py-2 rounded-xl ring-1 ring-outline-variant/10 text-slate-800">
-                       Due: <span className="text-error font-bold">{new Date(data.assignment.dueDate).toLocaleString()}</span>
-                     </div>
-                     {data.assignment.gradingType === 'graded' && (
-                       <div className="bg-surface-container-low px-4 py-2 rounded-xl ring-1 ring-outline-variant/10 text-slate-800">
-                         Total Marks: <span className="font-bold text-on-surface">{data.assignment.totalMarks}</span>
-                       </div>
-                     )}
-                   </div>
-                 </div>
-
-                {/* Status Badge */}
-                <div className="shrink-0 bg-surface-container-low/50 p-6 ring-1 ring-outline-variant/15 rounded-[1.5rem] min-w-[220px] shadow-sm">
-                   <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Submission Status</h3>
-                   {(!data.submission || data.submission.status === 'not_submitted') && (
-                     <div className="inline-flex items-center gap-3 text-sm font-bold text-amber-700 bg-amber-50 px-4 py-2 rounded-xl border border-amber-200/50 shadow-sm w-full">
-                       <div className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse ring-4 ring-amber-500/20"></div>
-                       Not Submitted
-                     </div>
-                   )}
-                   {data.submission?.status === 'submitted' && (
-                     <div className="inline-flex items-center gap-3 text-sm font-bold text-primary bg-primary/5 px-4 py-2 rounded-xl border border-primary/20 shadow-sm w-full">
-                       <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                       Submitted
-                     </div>
-                   )}
-                   {data.submission?.status === 'graded' && (
-                     <div className="inline-flex items-center gap-3 text-sm font-bold text-emerald-700 bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-200/50 shadow-sm w-full">
-                       <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
-                       Graded
-                     </div>
-                   )}
-                </div>
-              </div>
 
               <div className="prose prose-slate max-w-none prose-sm sm:prose-base bg-surface-container-low/50 ring-1 ring-outline-variant/10 p-8 rounded-[1.5rem]">
                  <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Instructions</h4>
-                 {data.assignment.description ? (
+                 {data.assignment?.description ? (
                    <p className="whitespace-pre-wrap text-slate-700 leading-relaxed font-medium">{data.assignment.description}</p>
                  ) : (
                    <p className="italic text-slate-400 font-medium">No description provided by instructor.</p>
                  )}
               </div>
-            </div>
 
             {/* Submission Section */}
             <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden">
@@ -200,7 +216,7 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
                </div>
                
                <div className="p-10">
-                 {data.assignment.gradingType === 'ungraded' && (
+                 {data.assignment?.gradingType === 'ungraded' && (
                    <div className="mb-8 bg-amber-50/40 shadow-ambient ring-1 ring-amber-200/50 text-amber-800 rounded-2xl p-6 text-sm flex items-start gap-4">
                      <svg className="w-6 h-6 shrink-0 text-amber-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -259,7 +275,7 @@ export default function StudentAssignmentDetailPage({ params }: { params: Promis
                           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Score</span>
                           <div className="text-5xl font-black text-emerald-600 tracking-tighter">
                             {data.submission.marks}
-                            <span className="text-xl font-bold text-slate-300">/{data.assignment.totalMarks}</span>
+                            <span className="text-xl font-bold text-slate-300">/{data.assignment?.totalMarks}</span>
                           </div>
                         </div>
                         <div className="flex-1 bg-surface-container-lowest ring-1 ring-emerald-600/10 shadow-sm p-8 rounded-2xl text-base text-slate-700 whitespace-pre-wrap leading-relaxed font-medium">

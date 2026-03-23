@@ -125,10 +125,48 @@ export default function StudentCourseDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href="/student/courses" className="text-sm font-medium text-primary hover:text-primary/80 mb-6 inline-block">
-          &larr; Back to My Courses
-        </Link>
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+             <Link href="/student/courses" className="hover:text-white transition-colors">Courses</Link>
+             <span>/</span>
+             <span className="text-white">{course ? course.code : 'Details'}</span>
+          </div>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                {course ? course.title : 'Course Details'}
+              </h1>
+              <p className="text-xl text-indigo-200/80 mt-3 font-medium max-w-3xl leading-relaxed">
+                {course ? course.description : 'Loading course information...'}
+              </p>
+            </div>
+            
+            {course && course.instructor && (
+              <div className="shrink-0 bg-white/5 backdrop-blur-md p-6 rounded-[1.5rem] ring-1 ring-white/20 min-w-[260px] shadow-sm">
+                <h3 className="text-[10px] font-bold text-indigo-200/60 uppercase tracking-widest mb-4">Instructor</h3>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-xl ring-1 ring-white/20 shadow-sm">
+                    {course.instructor.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white">{course.instructor.name}</div>
+                    <div className="text-xs text-indigo-200/80 mt-0.5">{course.instructor.email}</div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
 
         {loading ? (
           <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">
@@ -140,32 +178,6 @@ export default function StudentCourseDetailPage({ params }: { params: Promise<{ 
           </div>
         ) : (
           <div className="space-y-8">
-            {/* Header & Instructor Info */}
-            <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 p-10">
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-8">
-                <div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary mb-6 ring-1 ring-inset ring-primary/20">
-                    {course.code}
-                  </span>
-                  <h1 className="text-4xl font-extrabold text-on-surface tracking-tight mb-4">{course.title}</h1>
-                  <p className="text-lg text-slate-500 max-w-3xl leading-relaxed">{course.description}</p>
-                </div>
-                
-                <div className="shrink-0 bg-surface-container-low/50 p-6 rounded-[1.5rem] ring-1 ring-outline-variant/15 min-w-[260px] shadow-sm">
-                  <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Instructor</h3>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary font-bold text-xl ring-1 ring-outline-variant/15 shadow-sm">
-                      {course.instructor?.name?.charAt(0).toUpperCase() || 'I'}
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-on-surface">{course.instructor?.name}</div>
-                      <div className="text-xs text-slate-500 mt-0.5">{course.instructor?.email}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Modules & Materials */}
               <div className="lg:col-span-2 space-y-8">

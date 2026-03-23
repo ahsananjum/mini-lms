@@ -144,10 +144,45 @@ export default function InstructorSubmissionsPage({ params }: { params: Promise<
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href={`/instructor/assignments/${assignmentId}`} className="text-sm font-medium text-primary hover:text-primary/80 mb-6 inline-block">
-          &larr; Back to Assignment
-        </Link>
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+             <Link href={`/instructor/assignments/${assignmentId}`} className="hover:text-white transition-colors">Assignment</Link>
+             <span>/</span>
+             <span className="text-white">Submissions</span>
+          </div>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${assignment?.gradingType === 'graded' ? 'bg-primary/20 text-indigo-200 ring-1 ring-inset ring-primary/40' : 'bg-white/10 text-slate-300 ring-1 ring-inset ring-white/20'}`}>
+                   {assignment?.gradingType === 'graded' ? 'Graded' : 'Ungraded'}
+                 </span>
+                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-200 ring-1 ring-inset ring-amber-500/40">
+                   Due: {assignment && assignment.dueDate ? new Date(assignment.dueDate).toLocaleString() : '...'}
+                 </span>
+                 {assignment?.gradingType === 'graded' && (
+                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-200 ring-1 ring-inset ring-emerald-500/40">
+                     {assignment?.totalMarks} Marks
+                   </span>
+                 )}
+               </div>
+               <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                 {assignment ? assignment.title : 'Assignment Details'}
+               </h1>
+               <p className="text-xl text-indigo-200/80 mt-3 font-medium max-w-3xl leading-relaxed">
+                 {course ? `${course.code} • ${course.title}` : 'Loading...'}
+               </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
         
         {loading ? (
           <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">Loading submissions...</div>
@@ -155,35 +190,6 @@ export default function InstructorSubmissionsPage({ params }: { params: Promise<
           <div className="p-12 text-center text-error font-medium bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-error/30 mt-6">{error || 'Assignment not found'}</div>
         ) : (
           <div className="space-y-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface-container-lowest p-8 rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15">
-              <div>
-                <div className="flex items-center gap-4 mb-3">
-                  <h1 className="text-3xl font-extrabold text-on-surface tracking-tight">{assignment.title}</h1>
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ring-1 ring-inset ${assignment.gradingType === 'graded' ? 'bg-primary/10 text-primary ring-primary/20' : 'bg-surface-container-low text-slate-600 ring-outline-variant/15'}`}>
-                    {assignment.gradingType === 'graded' ? 'Graded' : 'Ungraded'}
-                  </span>
-                </div>
-                {course && (
-                  <p className="text-base font-medium text-slate-600 mb-2 font-mono">
-                    {course.code} <span className="text-slate-400 mx-2 font-sans">•</span> <span className="font-sans">{course.title}</span>
-                  </p>
-                )}
-                <div className="flex items-center gap-6 text-sm text-slate-500 mt-4">
-                  {assignment.dueDate && (
-                    <span className="flex items-center gap-2 font-medium">
-                      <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                      Due: {new Date(assignment.dueDate).toLocaleString()}
-                    </span>
-                  )}
-                  {assignment.gradingType === 'graded' && assignment.totalMarks && (
-                    <span className="flex items-center gap-2 font-medium">
-                      <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      Total Marks: {assignment.totalMarks}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
 
             {assignment.gradingType === 'ungraded' && (
               <div className="bg-amber-50/40 border border-amber-200/50 text-amber-800 rounded-2xl p-6 flex items-start gap-3 text-sm shadow-ambient">

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
-import { PageHeader } from '@/components/ui/PageHeader';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { apiFetch } from '@/lib/api';
@@ -59,77 +58,92 @@ export default function NewCoursePage() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-64px)] p-4 sm:p-8 bg-slate-50 relative">
-      <div className="w-full max-w-2xl relative z-10">
-        <div className="mb-6">
-          <Link href="/admin/courses" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-            &larr; Back to Courses
-          </Link>
+    <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+            <Link href="/admin" className="hover:text-white transition-colors">Admin</Link>
+            <span>/</span>
+            <Link href="/admin/courses" className="hover:text-white transition-colors">Courses</Link>
+            <span>/</span>
+            <span className="text-white">New</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Create Course</h1>
+          <p className="text-xl text-indigo-200/80 mt-2 font-medium">Initialize a new curriculum module.</p>
         </div>
-        
-        <PageHeader 
-          title="Create New Course" 
-          description="Fill out the details below to initialize a new course." 
-        />
-        
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 mt-6 overflow-hidden">
-          <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
-            
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20">
+        <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 flex flex-col overflow-hidden">
+          <div className="px-8 py-6 border-b border-outline-variant/10 bg-surface-container-low/30">
+            <h2 className="text-xl font-bold text-slate-900 tracking-tight">Course Settings</h2>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="p-8 space-y-8">
             {error && (
-              <div className="p-4 bg-rose-50/80 border border-rose-100 rounded-lg text-sm font-medium text-rose-600">
+              <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm font-medium text-rose-700">
                 {error}
               </div>
             )}
 
-            <div>
-              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-2">
-                Course Title
-              </label>
-              <Input
-                id="title"
-                name="title"
-                type="text"
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. Introduction to Computer Science"
-              />
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="title" className="block text-sm font-bold text-slate-700 tracking-wide uppercase mb-2">
+                  Course Title
+                </label>
+                <Input
+                  id="title"
+                  name="title"
+                  type="text"
+                  required
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="e.g. Introduction to Computer Science"
+                  className="bg-surface border-slate-200/60 focus:bg-white"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="code" className="block text-sm font-bold text-slate-700 tracking-wide uppercase mb-2">
+                  Course Code
+                </label>
+                <Input
+                  id="code"
+                  name="code"
+                  type="text"
+                  required
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="e.g. CS101"
+                  className="bg-surface border-slate-200/60 focus:bg-white"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="description" className="block text-sm font-bold text-slate-700 tracking-wide uppercase mb-2">
+                  Course Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                  rows={5}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-4 py-3 bg-surface border border-slate-200/60 rounded-xl shadow-sm focus:bg-white focus:outline-none focus:ring-[3px] focus:ring-primary/20 focus:border-primary hover:border-slate-300 transition-colors text-slate-900 placeholder:text-slate-400"
+                  placeholder="Enter a comprehensive description..."
+                />
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="code" className="block text-sm font-medium text-slate-700 mb-2">
-                Course Code
-              </label>
-              <Input
-                id="code"
-                name="code"
-                type="text"
-                required
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="e.g. CS101"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-slate-700 mb-2">
-                Course Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                required
-                rows={5}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 hover:border-slate-300 transition-colors text-slate-900 placeholder:text-slate-400"
-                placeholder="Enter a comprehensive description..."
-              />
-            </div>
-
-            <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
+            <div className="pt-6 flex justify-end gap-3 border-t border-outline-variant/10">
               <Link href="/admin/courses">
-                <Button variant="secondary" type="button" className="px-6">
+                <Button variant="secondary" type="button" className="px-6 shadow-sm">
                   Cancel
                 </Button>
               </Link>

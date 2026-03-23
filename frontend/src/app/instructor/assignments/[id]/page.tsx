@@ -109,21 +109,56 @@ export default function InstructorAssignmentDetailPage({ params }: { params: Pro
   if (authLoading || !user || user.role !== 'instructor') return <div className="p-8 text-center text-slate-500">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {assignment && (
-          <Link href={`/instructor/courses/${assignment.course}/assignments`} className="text-sm font-medium text-indigo-600 hover:text-indigo-700 mb-6 inline-block">
-            &larr; Back to Assignments
-          </Link>
-        )}
+    <div className="min-h-[calc(100vh-80px)] bg-surface pb-24">
+      {/* Premium Hero Header */}
+      <div className="relative bg-slate-900 border-b border-white/10 pt-16 pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-fixed/20 to-transparent mix-blend-overlay z-0"></div>
+        <div className="absolute top-[0%] left-[-10%] w-[40%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] z-0 opacity-30 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3 mb-4 text-indigo-200/80 font-medium">
+             <Link href={assignment ? `/instructor/courses/${assignment.course}/assignments` : '/instructor/courses'} className="hover:text-white transition-colors">Assignments</Link>
+             <span>/</span>
+             <span className="text-white">Details</span>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${assignment?.gradingType === 'graded' ? 'bg-primary/20 text-indigo-200 ring-1 ring-inset ring-primary/40' : 'bg-white/10 text-slate-300 ring-1 ring-inset ring-white/20'}`}>
+                   {assignment?.gradingType === 'graded' ? 'Graded' : 'Ungraded'}
+                 </span>
+                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-200 ring-1 ring-inset ring-amber-500/40">
+                   Due: {assignment ? new Date(assignment.dueDate).toLocaleString() : '...'}
+                 </span>
+                 {assignment?.gradingType === 'graded' && (
+                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-200 ring-1 ring-inset ring-emerald-500/40">
+                     {assignment?.totalMarks} Marks
+                   </span>
+                 )}
+               </div>
+               <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                 {assignment ? assignment.title : 'Assignment Details'}
+               </h1>
+            </div>
+            {!isEditing && (
+               <Button variant="secondary" onClick={() => setIsEditing(true)} className="shadow-sm border-transparent bg-white/10 text-white hover:bg-white/20 whitespace-nowrap px-8 h-[48px]">
+                 Edit Details
+               </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
         
         {loading ? (
-          <div className="p-12 text-center text-slate-500 bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">Loading assignment...</div>
+          <div className="p-16 text-center text-slate-500 bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 mt-6">Loading assignment...</div>
         ) : error || !assignment ? (
-          <div className="p-8 text-center text-rose-500 font-medium bg-white rounded-2xl shadow-sm border border-slate-200 mt-6">{error || 'Assignment not found'}</div>
+          <div className="p-12 text-center text-error font-medium bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-error/30 mt-6">{error || 'Assignment not found'}</div>
         ) : (
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="space-y-8">
+            <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 overflow-hidden">
                {isEditing ? (
                  <form onSubmit={handleUpdate} className="p-8 space-y-6">
                    <div className="flex justify-between items-center mb-2">
@@ -172,30 +207,8 @@ export default function InstructorAssignmentDetailPage({ params }: { params: Pro
                    </div>
                  </form>
                ) : (
-                 <div className="p-8">
-                   <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
-                     <div>
-                       <div className="flex items-center gap-3 mb-3">
-                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${assignment.gradingType === 'graded' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}`}>
-                           {assignment.gradingType === 'graded' ? 'Graded' : 'Ungraded'}
-                         </span>
-                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-                           Due: {new Date(assignment.dueDate).toLocaleString()}
-                         </span>
-                         {assignment.gradingType === 'graded' && (
-                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800">
-                             {assignment.totalMarks} Marks
-                           </span>
-                         )}
-                       </div>
-                       <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{assignment.title}</h1>
-                     </div>
-                     <div className="flex gap-3 whitespace-nowrap">
-                       <Button variant="secondary" onClick={() => setIsEditing(true)}>Edit Details</Button>
-                     </div>
-                   </div>
-                   
-                   <div className="prose prose-slate max-w-none bg-slate-50 p-6 rounded-xl border border-slate-100">
+                 <div className="p-10">
+                   <div className="prose prose-slate max-w-none bg-surface-container-low/50 p-8 rounded-[1.5rem] border border-outline-variant/10">
                      <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">Instructions</h3>
                      {assignment.description ? (
                        <p className="whitespace-pre-wrap text-slate-700">{assignment.description}</p>
@@ -208,13 +221,13 @@ export default function InstructorAssignmentDetailPage({ params }: { params: Pro
             </div>
 
             {/* Submissions Card */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="bg-surface-container-lowest rounded-[2rem] shadow-ambient ring-1 ring-outline-variant/15 p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
                <div>
-                  <h3 className="text-xl font-bold text-slate-900">Student Submissions</h3>
-                  <p className="text-slate-500 mt-1">Review student work{assignment.gradingType === 'graded' ? ', assign grades,' : ''} and provide feedback.</p>
+                  <h3 className="text-xl font-bold text-on-surface">Student Submissions</h3>
+                  <p className="text-slate-500 mt-1 text-lg">Review student work{assignment.gradingType === 'graded' ? ', assign grades,' : ''} and provide feedback.</p>
                </div>
                <Link href={`/instructor/assignments/${assignment._id}/submissions`}>
-                  <Button variant="primary">View {assignment.gradingType === 'graded' ? '& Grade ' : ''}Submissions</Button>
+                  <Button variant="primary" className="px-8 h-[48px] whitespace-nowrap">View {assignment.gradingType === 'graded' ? '& Grade ' : ''}Submissions</Button>
                </Link>
             </div>
             
